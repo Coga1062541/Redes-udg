@@ -1,1 +1,1929 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Guía completa de la Red Universitaria de la Universidad de Guadalajara. Explora centros universitarios, preparatorias, dependencias administrativas y modalidades virtuales.">
+<title>Red UDG — Universidad de Guadalajara</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  /* ── TOKENS ────────────────────────────────────── */
+  :root {
+    --rojo:    #C8102E;
+    --rojo-d:  #9B0A22;
+    --rojo-l:  #E8294A;
+    --oro:     #C9A84C;
+    --oro-l:   #E2C47A;
+    --blanco:  #FFFFFF;
+    --crema:   #FBF8F3;
+    --gris-f:  #F2EEE8;
+    --gris-m:  #8A8078;
+    --gris-o:  #3A3028;
+    --negro:   #1A1210;
+    --azul-a:  #1A3A5C;
 
+    --r: 8px;
+    --r-lg: 16px;
+    --shadow: 0 4px 24px rgba(26,18,16,.10);
+    --shadow-h: 0 12px 48px rgba(200,16,46,.18);
+    --t: .25s cubic-bezier(.4,0,.2,1);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--crema);
+    color: var(--gris-o);
+    overflow-x: hidden;
+  }
+
+  /* ── SCROLLBAR ──────────────────────────────────── */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: var(--gris-f); }
+  ::-webkit-scrollbar-thumb { background: var(--rojo); border-radius: 3px; }
+
+  /* ── UTILS ──────────────────────────────────────── */
+  .container { max-width: 1280px; margin: 0 auto; padding: 0 24px; }
+  .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0,0,0,0); }
+
+  /* ── NAV ────────────────────────────────────────── */
+  #nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    backdrop-filter: blur(20px) saturate(180%);
+    background: rgba(251,248,243,.88);
+    border-bottom: 1px solid rgba(200,16,46,.12);
+    transition: var(--t);
+  }
+  .nav-inner {
+    display: flex; align-items: center; justify-content: space-between;
+    height: 64px; gap: 16px;
+  }
+  .nav-logo {
+    display: flex; align-items: center; gap: 12px;
+    text-decoration: none;
+  }
+  .nav-logo-badge {
+    width: 40px; height: 40px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--rojo) 0%, var(--rojo-d) 100%);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px; flex-shrink: 0;
+    box-shadow: 0 2px 8px rgba(200,16,46,.4);
+  }
+  .nav-logo-text { line-height: 1.1; }
+  .nav-logo-text strong {
+    display: block;
+    font-family: 'Playfair Display', serif;
+    font-size: 15px; font-weight: 700;
+    color: var(--rojo);
+  }
+  .nav-logo-text span { font-size: 11px; color: var(--gris-m); letter-spacing: .04em; }
+
+  #search-nav {
+    flex: 1; max-width: 400px;
+    display: flex; align-items: center;
+    background: var(--gris-f); border-radius: 24px;
+    padding: 0 16px; gap: 8px; border: 1.5px solid transparent;
+    transition: var(--t);
+  }
+  #search-nav:focus-within { border-color: var(--rojo); background: var(--blanco); }
+  #search-nav input {
+    border: none; background: transparent; outline: none;
+    font-family: 'Inter', sans-serif; font-size: 14px;
+    color: var(--gris-o); width: 100%; padding: 10px 0;
+  }
+  #search-nav input::placeholder { color: var(--gris-m); }
+  .search-icon { color: var(--gris-m); font-size: 16px; }
+
+  .nav-cta {
+    padding: 9px 20px; border-radius: 24px;
+    background: var(--rojo); color: var(--blanco);
+    font-size: 13px; font-weight: 600; text-decoration: none;
+    letter-spacing: .02em; white-space: nowrap;
+    transition: var(--t);
+  }
+  .nav-cta:hover { background: var(--rojo-l); transform: translateY(-1px); box-shadow: var(--shadow-h); }
+
+  /* ── HERO ────────────────────────────────────────── */
+  #hero {
+    min-height: 100vh;
+    display: flex; align-items: center;
+    position: relative; overflow: hidden;
+    padding: 100px 0 60px;
+  }
+  .hero-mesh {
+    position: absolute; inset: 0; z-index: 0;
+    background:
+      radial-gradient(ellipse 80% 60% at 70% 40%, rgba(200,16,46,.13) 0%, transparent 60%),
+      radial-gradient(ellipse 50% 70% at 20% 80%, rgba(201,168,76,.10) 0%, transparent 55%),
+      radial-gradient(ellipse 60% 50% at 50% 10%, rgba(26,58,92,.08) 0%, transparent 50%),
+      var(--crema);
+    animation: meshShift 12s ease-in-out infinite alternate;
+  }
+  @keyframes meshShift {
+    0%   { filter: hue-rotate(0deg) brightness(1); }
+    100% { filter: hue-rotate(8deg) brightness(1.03); }
+  }
+
+  .hero-grid {
+    position: relative; z-index: 1;
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 64px; align-items: center;
+  }
+  .hero-eyebrow {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(200,16,46,.08); border: 1px solid rgba(200,16,46,.2);
+    color: var(--rojo); border-radius: 24px;
+    padding: 6px 14px; font-size: 12px; font-weight: 600;
+    letter-spacing: .08em; text-transform: uppercase;
+    margin-bottom: 24px;
+  }
+  .hero-eyebrow::before { content: '●'; font-size: 8px; animation: pulse 2s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1}50%{opacity:.3} }
+
+  .hero-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.2rem, 4.5vw, 3.6rem);
+    font-weight: 900; line-height: 1.08;
+    color: var(--negro); margin-bottom: 20px;
+  }
+  .hero-title em {
+    font-style: normal; color: var(--rojo);
+    position: relative;
+  }
+  .hero-subtitle {
+    font-size: 17px; line-height: 1.65;
+    color: var(--gris-m); max-width: 480px; margin-bottom: 36px;
+  }
+  .hero-actions { display: flex; gap: 12px; flex-wrap: wrap; }
+  .btn-primary {
+    padding: 14px 28px; border-radius: var(--r);
+    background: linear-gradient(135deg, var(--rojo) 0%, var(--rojo-d) 100%);
+    color: var(--blanco); font-weight: 600; font-size: 15px;
+    text-decoration: none; border: none; cursor: pointer;
+    transition: var(--t);
+    box-shadow: 0 4px 16px rgba(200,16,46,.35);
+  }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: var(--shadow-h); filter: brightness(1.08); }
+  .btn-ghost {
+    padding: 13px 28px; border-radius: var(--r);
+    background: transparent; color: var(--gris-o);
+    font-weight: 500; font-size: 15px; text-decoration: none;
+    border: 1.5px solid rgba(58,48,40,.2); cursor: pointer;
+    transition: var(--t);
+  }
+  .btn-ghost:hover { border-color: var(--rojo); color: var(--rojo); background: rgba(200,16,46,.04); }
+
+  .hero-stats {
+    display: flex; gap: 32px; margin-top: 48px;
+    padding-top: 32px; border-top: 1px solid rgba(58,48,40,.1);
+  }
+  .stat-item { text-align: center; }
+  .stat-num {
+    display: block;
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem; font-weight: 700; color: var(--rojo);
+    line-height: 1;
+  }
+  .stat-lbl { font-size: 11px; color: var(--gris-m); letter-spacing: .06em; text-transform: uppercase; margin-top: 4px; }
+
+  /* Visual side */
+  .hero-visual {
+    display: grid; grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto auto; gap: 12px;
+  }
+  .vis-card {
+    border-radius: var(--r-lg);
+    padding: 28px 20px;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    text-align: center; position: relative; overflow: hidden;
+    transition: var(--t);
+  }
+  .vis-card:hover { transform: translateY(-4px); }
+  .vis-card.large { grid-column: 1 / -1; }
+  .vis-card-1 { background: linear-gradient(135deg, #C8102E 0%, #9B0A22 100%); color: white; }
+  .vis-card-2 { background: linear-gradient(135deg, #C9A84C 0%, #A8893A 100%); color: white; }
+  .vis-card-3 { background: linear-gradient(135deg, #1A3A5C 0%, #0D2240 100%); color: white; }
+  .vis-card-4 { background: linear-gradient(135deg, #2D5A27 0%, #1B3A18 100%); color: white; }
+  .vis-card-5 { background: linear-gradient(135deg, #5C1A3A 0%, #3A0D22 100%); color: white; }
+  .vis-card .vis-emoji { font-size: 2.8rem; margin-bottom: 8px; }
+  .vis-card .vis-label { font-size: 12px; font-weight: 600; letter-spacing: .06em; opacity: .9; text-transform: uppercase; }
+  .vis-card .vis-num { font-family: 'Playfair Display', serif; font-size: 1.8rem; font-weight: 700; }
+
+  /* ── FILTER TABS ─────────────────────────────────── */
+  #filters {
+    position: sticky; top: 64px; z-index: 90;
+    background: rgba(251,248,243,.95);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(58,48,40,.08);
+    padding: 12px 0;
+  }
+  .filter-scroll {
+    display: flex; gap: 8px; overflow-x: auto;
+    scrollbar-width: none; -ms-overflow-style: none;
+    padding-bottom: 2px;
+  }
+  .filter-scroll::-webkit-scrollbar { display: none; }
+  .filter-btn {
+    display: flex; align-items: center; gap: 6px;
+    padding: 9px 18px; border-radius: 24px;
+    border: 1.5px solid rgba(58,48,40,.15);
+    background: transparent; color: var(--gris-m);
+    font-size: 13px; font-weight: 500; cursor: pointer;
+    white-space: nowrap; transition: var(--t);
+    font-family: 'Inter', sans-serif;
+  }
+  .filter-btn:hover { border-color: var(--rojo); color: var(--rojo); }
+  .filter-btn.active {
+    background: var(--rojo); border-color: var(--rojo);
+    color: var(--blanco); box-shadow: 0 2px 12px rgba(200,16,46,.3);
+  }
+  .filter-count {
+    background: rgba(255,255,255,.25); border-radius: 24px;
+    padding: 1px 7px; font-size: 11px; font-weight: 600;
+  }
+  .filter-btn:not(.active) .filter-count { background: rgba(58,48,40,.08); }
+
+  /* ── SECTIONS ────────────────────────────────────── */
+  .section { padding: 80px 0; }
+  .section-alt { background: var(--gris-f); }
+
+  .section-header { margin-bottom: 48px; }
+  .section-eyebrow {
+    font-size: 11px; font-weight: 600; letter-spacing: .12em;
+    text-transform: uppercase; color: var(--rojo);
+    margin-bottom: 10px;
+  }
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.6rem, 3vw, 2.4rem);
+    font-weight: 700; color: var(--negro); line-height: 1.2;
+  }
+  .section-sub { margin-top: 12px; font-size: 16px; color: var(--gris-m); max-width: 560px; line-height: 1.6; }
+
+  /* ── CARDS GRID ──────────────────────────────────── */
+  .cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+  }
+  .cards-grid-4 {
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  }
+
+  /* ── INSTITUTION CARD ────────────────────────────── */
+  .card {
+    background: var(--blanco);
+    border-radius: var(--r-lg);
+    border: 1px solid rgba(58,48,40,.08);
+    overflow: hidden;
+    transition: var(--t);
+    display: flex; flex-direction: column;
+    box-shadow: var(--shadow);
+  }
+  .card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 16px 48px rgba(26,18,16,.14);
+    border-color: rgba(200,16,46,.15);
+  }
+
+  .card-banner {
+    height: 110px; display: flex; align-items: center; justify-content: center;
+    font-size: 3.5rem; position: relative; overflow: hidden; flex-shrink: 0;
+  }
+  .card-banner::after {
+    content: ''; position: absolute; inset: 0;
+    background: inherit; opacity: .15;
+  }
+  .card-banner-emoji { position: relative; z-index: 1; filter: drop-shadow(0 4px 12px rgba(0,0,0,.2)); }
+
+  /* Mesh gradients per type */
+  .mesh-cu    { background: radial-gradient(ellipse at 30% 40%, #C8102E 0%, #6B0011 60%, #1A0008 100%); }
+  .mesh-cu-2  { background: radial-gradient(ellipse at 70% 30%, #C9A84C 0%, #7A5A1A 60%, #2A1A00 100%); }
+  .mesh-cu-3  { background: radial-gradient(ellipse at 50% 60%, #1A3A5C 0%, #0A1F3A 60%, #000A1A 100%); }
+  .mesh-cu-4  { background: radial-gradient(ellipse at 40% 50%, #2D5A27 0%, #0D2A0A 60%, #001500 100%); }
+  .mesh-cu-5  { background: radial-gradient(ellipse at 60% 40%, #5C1A3A 0%, #2A0018 60%, #100005 100%); }
+  .mesh-cu-6  { background: radial-gradient(ellipse at 35% 55%, #3A1A5C 0%, #1A0040 60%, #080015 100%); }
+  .mesh-cu-7  { background: radial-gradient(ellipse at 65% 35%, #1A4A5C 0%, #0A2030 60%, #001015 100%); }
+  .mesh-prep  { background: radial-gradient(ellipse at 40% 50%, #C8102E 0%, #8B0020 50%, #3A0010 100%); }
+  .mesh-prep2 { background: radial-gradient(ellipse at 60% 40%, #D46A1A 0%, #8B3A00 50%, #3A1500 100%); }
+  .mesh-admin { background: radial-gradient(ellipse at 50% 50%, #1A3A5C 0%, #0A1F40 60%, #000815 100%); }
+  .mesh-virt  { background: radial-gradient(ellipse at 45% 55%, #2D5A27 0%, #143010 60%, #001000 100%); }
+
+  .card-body { padding: 20px; flex: 1; display: flex; flex-direction: column; }
+  .card-siglas {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; font-weight: 500;
+    color: var(--rojo); letter-spacing: .1em;
+    text-transform: uppercase; margin-bottom: 6px;
+  }
+  .card-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 16px; font-weight: 700;
+    color: var(--negro); line-height: 1.25; margin-bottom: 8px;
+  }
+  .card-desc { font-size: 13px; line-height: 1.55; color: var(--gris-m); flex: 1; }
+  .card-meta {
+    display: flex; flex-wrap: wrap; gap: 6px;
+    margin-top: 14px; padding-top: 14px;
+    border-top: 1px solid var(--gris-f);
+  }
+  .tag {
+    font-size: 11px; font-weight: 500;
+    padding: 3px 10px; border-radius: 12px;
+    background: var(--gris-f); color: var(--gris-m);
+  }
+  .tag.municipio { background: rgba(200,16,46,.07); color: var(--rojo-d); }
+  .tag.modalidad { background: rgba(201,168,76,.1); color: #7A5A1A; }
+
+  .card-actions {
+    display: flex; gap: 8px;
+    padding: 14px 20px 20px; flex-wrap: wrap;
+  }
+  .card-btn {
+    flex: 1; min-width: 0;
+    padding: 8px 12px; border-radius: var(--r);
+    font-size: 12px; font-weight: 600;
+    text-align: center; text-decoration: none;
+    cursor: pointer; border: none; transition: var(--t);
+    font-family: 'Inter', sans-serif;
+  }
+  .card-btn-primary {
+    background: var(--rojo); color: var(--blanco);
+  }
+  .card-btn-primary:hover { background: var(--rojo-l); }
+  .card-btn-ghost {
+    background: var(--gris-f); color: var(--gris-o);
+    border: 1px solid rgba(58,48,40,.12);
+  }
+  .card-btn-ghost:hover { border-color: var(--rojo); color: var(--rojo); background: rgba(200,16,46,.04); }
+  /* ── LOAD MORE BUTTON ────────────────────────────── */
+  .load-more-wrap {
+    display: flex; flex-direction: column; align-items: center;
+    gap: 12px; padding: 36px 0 8px;
+  }
+  .load-more-bar {
+    width: 100%; max-width: 400px; height: 3px;
+    background: var(--gris-f); border-radius: 2px; overflow: hidden;
+  }
+  .load-more-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--rojo), var(--oro));
+    border-radius: 2px;
+    transition: width .5s cubic-bezier(.4,0,.2,1);
+  }
+  .load-more-btn {
+    display: inline-flex; align-items: center; gap: 10px;
+    padding: 13px 32px; border-radius: 40px;
+    background: var(--blanco);
+    border: 1.5px solid rgba(200,16,46,.25);
+    color: var(--rojo); font-family: 'Inter', sans-serif;
+    font-size: 14px; font-weight: 600; cursor: pointer;
+    transition: all .3s cubic-bezier(.4,0,.2,1);
+    box-shadow: 0 2px 12px rgba(200,16,46,.08);
+    position: relative; overflow: hidden;
+  }
+  .load-more-btn::before {
+    content: ''; position: absolute; inset: 0;
+    background: linear-gradient(135deg, var(--rojo), var(--rojo-l));
+    opacity: 0; transition: opacity .3s;
+  }
+  .load-more-btn:hover::before { opacity: 1; }
+  .load-more-btn:hover { color: white; border-color: var(--rojo); transform: translateY(-2px); box-shadow: var(--shadow-h); }
+  .load-more-btn span { position: relative; z-index: 1; }
+  .load-more-btn .lm-icon { position: relative; z-index: 1; font-size: 16px; transition: transform .3s; }
+  .load-more-btn:hover .lm-icon { transform: translateY(2px); }
+  .load-more-count {
+    font-size: 12px; color: var(--gris-m); letter-spacing: .03em;
+  }
+  .load-more-end {
+    display: flex; align-items: center; gap: 10px;
+    padding: 20px 0 4px; color: var(--gris-m); font-size: 13px;
+  }
+  .load-more-end::before, .load-more-end::after {
+    content: ''; flex: 1; max-width: 80px; height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(200,16,46,.2));
+  }
+  .load-more-end::after { background: linear-gradient(270deg, transparent, rgba(200,16,46,.2)); }
+
+  /* ── PROGRESSIVE LOADING ──────────────────────── */
+  /* Hidden cards must be fully removed from the grid flow */
+  .card-lazy {
+    display: none !important;
+    visibility: hidden !important;
+    position: absolute !important;
+    pointer-events: none !important;
+  }
+  /* When revealed, restore to correct display type per card kind */
+  article.card.revealed          { display: flex !important; position: relative !important; visibility: visible !important; }
+  article.prep-card.revealed     { display: block !important; position: relative !important; visibility: visible !important; }
+  article.admin-card.revealed    { display: flex !important; position: relative !important; visibility: visible !important; }
+  article.virt-card.revealed     { display: block !important; position: relative !important; visibility: visible !important; }
+  /* Smooth entrance */
+  @keyframes cardReveal {
+    from { opacity: 0; transform: translateY(14px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  article.revealed {
+    animation: cardReveal .35s cubic-bezier(.4,0,.2,1) both;
+  }
+
+  /* ── PREP GRID ───────────────────────────────────── */
+  .prep-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 14px;
+  }
+  .prep-card {
+    background: var(--blanco); border-radius: var(--r);
+    border: 1px solid rgba(58,48,40,.08);
+    overflow: hidden; transition: var(--t);
+    box-shadow: var(--shadow);
+  }
+  .prep-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-h); border-color: rgba(200,16,46,.2); }
+  .prep-banner {
+    height: 70px; display: flex; align-items: center; justify-content: center;
+    font-size: 2.2rem;
+  }
+  .prep-body { padding: 14px; }
+  .prep-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px; color: var(--rojo); letter-spacing: .1em; margin-bottom: 4px;
+  }
+  .prep-name { font-size: 13px; font-weight: 600; color: var(--negro); line-height: 1.3; margin-bottom: 6px; }
+  .prep-loc { font-size: 11px; color: var(--gris-m); }
+  .prep-actions { display: flex; gap: 6px; padding: 8px 14px 14px; }
+
+  /* ── ADMIN CARDS ─────────────────────────────────── */
+  .admin-card {
+    background: var(--blanco); border-radius: var(--r-lg);
+    border: 1px solid rgba(58,48,40,.08);
+    padding: 28px; transition: var(--t);
+    box-shadow: var(--shadow);
+    display: flex; flex-direction: column; gap: 12px;
+  }
+  .admin-card:hover { transform: translateY(-3px); box-shadow: 0 16px 48px rgba(26,58,92,.12); border-color: rgba(26,58,92,.25); }
+  .admin-icon { font-size: 2.4rem; }
+  .admin-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 16px; font-weight: 700; color: var(--negro); line-height: 1.3;
+  }
+  .admin-desc { font-size: 13px; color: var(--gris-m); line-height: 1.55; }
+
+  /* ── VIRTUAL SECTION ─────────────────────────────── */
+  .virt-hero {
+    background: linear-gradient(135deg, #0D2240 0%, #1A3A5C 50%, #0D3020 100%);
+    border-radius: 24px; padding: 56px 48px;
+    color: white; position: relative; overflow: hidden;
+    margin-bottom: 40px;
+  }
+  .virt-hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse 60% 80% at 80% 50%, rgba(45,90,39,.4) 0%, transparent 60%);
+  }
+  .virt-hero-content { position: relative; z-index: 1; max-width: 560px; }
+  .virt-hero h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.6rem, 3vw, 2.4rem); font-weight: 700;
+    margin-bottom: 16px; line-height: 1.2;
+  }
+  .virt-hero p { font-size: 16px; opacity: .85; line-height: 1.65; margin-bottom: 24px; }
+  .virt-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+  .virt-tag {
+    background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.2);
+    color: white; border-radius: 20px; padding: 6px 14px; font-size: 12px; font-weight: 500;
+  }
+  .virt-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 16px; }
+  .virt-card {
+    background: var(--blanco); border-radius: var(--r-lg);
+    border: 1px solid rgba(45,90,39,.12);
+    padding: 24px; transition: var(--t);
+    box-shadow: var(--shadow);
+  }
+  .virt-card:hover { transform: translateY(-3px); border-color: rgba(45,90,39,.3); box-shadow: 0 12px 36px rgba(45,90,39,.12); }
+  .virt-card-icon { font-size: 2rem; margin-bottom: 12px; }
+  .virt-card-level {
+    font-size: 10px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase;
+    color: #2D5A27; margin-bottom: 6px;
+  }
+  .virt-card-name { font-family: 'Playfair Display', serif; font-size: 15px; font-weight: 700; color: var(--negro); line-height: 1.3; }
+  .virt-card-desc { font-size: 12px; color: var(--gris-m); line-height: 1.55; margin-top: 8px; }
+
+  /* ── NO RESULTS ──────────────────────────────────── */
+  .no-results {
+    text-align: center; padding: 80px 24px;
+    display: none;
+  }
+  .no-results.show { display: block; }
+  .no-results-icon { font-size: 3rem; margin-bottom: 16px; }
+  .no-results h3 { font-family: 'Playfair Display', serif; font-size: 1.4rem; color: var(--gris-o); margin-bottom: 8px; }
+  .no-results p { font-size: 14px; color: var(--gris-m); }
+
+  /* ── SECTION DIVIDER ─────────────────────────────── */
+  .divider {
+    width: 48px; height: 3px;
+    background: linear-gradient(90deg, var(--rojo), var(--oro));
+    border-radius: 2px; margin: 16px 0 0;
+  }
+
+  /* ── FOOTER ──────────────────────────────────────── */
+  footer {
+    background: var(--negro);
+    color: rgba(255,255,255,.75);
+    padding: 64px 0 32px;
+  }
+  .footer-grid {
+    display: grid; grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 48px; margin-bottom: 48px;
+  }
+  .footer-brand strong {
+    display: block;
+    font-family: 'Playfair Display', serif;
+    font-size: 20px; color: white; margin-bottom: 4px;
+  }
+  .footer-brand span { font-size: 12px; color: var(--rojo-l); letter-spacing: .06em; }
+  .footer-brand p { margin-top: 16px; font-size: 13px; line-height: 1.65; max-width: 280px; }
+  .footer-social { display: flex; gap: 8px; margin-top: 20px; }
+  .social-btn {
+    width: 36px; height: 36px; border-radius: 50%;
+    background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.12);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px; text-decoration: none; color: rgba(255,255,255,.7);
+    transition: var(--t);
+  }
+  .social-btn:hover { background: var(--rojo); border-color: var(--rojo); color: white; }
+  .footer-col h4 {
+    font-size: 12px; font-weight: 700; letter-spacing: .1em;
+    text-transform: uppercase; color: rgba(255,255,255,.4);
+    margin-bottom: 16px;
+  }
+  .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+  .footer-col ul li a {
+    font-size: 13px; color: rgba(255,255,255,.65);
+    text-decoration: none; transition: var(--t);
+  }
+  .footer-col ul li a:hover { color: var(--oro-l); }
+  .footer-bottom {
+    display: flex; justify-content: space-between; align-items: center;
+    padding-top: 32px; border-top: 1px solid rgba(255,255,255,.08);
+    flex-wrap: wrap; gap: 12px;
+  }
+  .footer-bottom p { font-size: 12px; color: rgba(255,255,255,.35); }
+  .footer-badge {
+    display: flex; align-items: center; gap: 6px;
+    font-size: 12px; color: rgba(255,255,255,.4);
+  }
+  .footer-badge span { color: var(--rojo-l); }
+
+  /* ── ANIMATIONS ──────────────────────────────────── */
+  .fade-up {
+    opacity: 0; transform: translateY(24px);
+    transition: opacity .6s, transform .6s;
+  }
+  .fade-up.visible { opacity: 1; transform: none; }
+
+  /* Section headers & banners always visible — CSS entrance only */
+  .section-header {
+    animation: sectionFadeIn .7s cubic-bezier(.4,0,.2,1) both;
+  }
+  .virt-hero {
+    animation: sectionFadeIn .7s cubic-bezier(.4,0,.2,1) .1s both;
+  }
+  @keyframes sectionFadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: none; }
+  }
+
+  .hidden-section { display: none; }
+  .visible-section { display: block; }
+
+  /* ── RESPONSIVE ──────────────────────────────────── */
+  @media (max-width: 1024px) {
+    .footer-grid { grid-template-columns: 1fr 1fr; gap: 32px; }
+    .hero-grid { grid-template-columns: 1fr; gap: 40px; }
+    .hero-visual { grid-template-columns: repeat(3, 1fr); }
+    .vis-card.large { grid-column: 1 / -1; }
+  }
+  @media (max-width: 768px) {
+    .hero-stats { gap: 20px; }
+    .nav-logo-text span { display: none; }
+    #search-nav { max-width: 200px; }
+    .section { padding: 56px 0; }
+    .cards-grid { grid-template-columns: 1fr; }
+    .prep-grid { grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); }
+    .virt-hero { padding: 36px 24px; }
+  }
+  @media (max-width: 480px) {
+    .footer-grid { grid-template-columns: 1fr; }
+    .hero-visual { grid-template-columns: 1fr 1fr; }
+    .hero-stats { flex-wrap: wrap; justify-content: center; }
+    #search-nav { display: none; }
+  }
+
+  /* ── SEARCH HIGHLIGHT ────────────────────────────── */
+  .search-hidden { display: none !important; }
+  .search-match .card-name,
+  .search-match .prep-name,
+  .search-match .admin-name,
+  .search-match .virt-card-name { color: var(--rojo); }
+
+  /* ── SUBSECTION TABS (preparatorias) ─────────────── */
+  .sub-tabs { display: flex; gap: 8px; margin-bottom: 28px; flex-wrap: wrap; }
+  .sub-tab {
+    padding: 7px 16px; border-radius: 20px;
+    font-size: 13px; font-weight: 500; cursor: pointer;
+    border: 1.5px solid rgba(58,48,40,.15);
+    background: transparent; color: var(--gris-m);
+    transition: var(--t); font-family: 'Inter', sans-serif;
+  }
+  .sub-tab.active { background: var(--rojo); border-color: var(--rojo); color: white; }
+
+  .prep-subsection { display: none; }
+  .prep-subsection.active-sub { display: block; }
+</style>
+</head>
+<body>
+
+<!-- ╔══════ NAV ══════╗ -->
+<nav id="nav" role="navigation" aria-label="Navegación principal">
+  <div class="container">
+    <div class="nav-inner">
+      <a href="#" class="nav-logo" aria-label="Red UDG - Inicio">
+        <div class="nav-logo-badge">🎓</div>
+        <div class="nav-logo-text">
+          <strong>Red UDG</strong>
+          <span>Universidad de Guadalajara</span>
+        </div>
+      </a>
+      <div id="search-nav" role="search">
+        <span class="search-icon" aria-hidden="true">🔍</span>
+        <input type="text" id="main-search" placeholder="Buscar plantel, carrera o municipio…" aria-label="Buscar plantel">
+      </div>
+      <a href="#centros" class="nav-cta">Explorar Red</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ╔══════ HERO ══════╗ -->
+<section id="hero" role="banner">
+  <div class="hero-mesh" aria-hidden="true"></div>
+  <div class="container">
+    <div class="hero-grid">
+      <div class="hero-content">
+        <div class="hero-eyebrow" role="note">Guía Oficial 2024–2025</div>
+        <h1 class="hero-title">
+          Explora toda la <em>Red Universitaria</em> de la UDG
+        </h1>
+        <p class="hero-subtitle">
+          Conoce preparatorias, centros universitarios, carreras, modalidades virtuales y dependencias administrativas en un solo lugar.
+        </p>
+        <div class="hero-actions">
+          <a href="#centros" class="btn-primary">🎓 Explorar Red UDG</a>
+          <a href="#buscar" class="btn-ghost">🔎 Buscar Plantel</a>
+        </div>
+        <div class="hero-stats" role="list" aria-label="Estadísticas de la Red">
+          <div class="stat-item" role="listitem">
+            <span class="stat-num">20</span>
+            <div class="stat-lbl">Centros Univ.</div>
+          </div>
+          <div class="stat-item" role="listitem">
+            <span class="stat-num">49+</span>
+            <div class="stat-lbl">Preparatorias</div>
+          </div>
+          <div class="stat-item" role="listitem">
+            <span class="stat-num">320k+</span>
+            <div class="stat-lbl">Estudiantes</div>
+          </div>
+          <div class="stat-item" role="listitem">
+            <span class="stat-num">340+</span>
+            <div class="stat-lbl">Programas</div>
+          </div>
+        </div>
+      </div>
+      <div class="hero-visual" aria-hidden="true">
+        <div class="vis-card vis-card-1 large">
+          <div class="vis-emoji">🏛️</div>
+          <div class="vis-label">Universidad de Guadalajara</div>
+          <div class="vis-num">Fundada 1792</div>
+        </div>
+        <div class="vis-card vis-card-2">
+          <div class="vis-emoji">🧪</div>
+          <div class="vis-label">Ciencias Exactas</div>
+        </div>
+        <div class="vis-card vis-card-3">
+          <div class="vis-emoji">⚕️</div>
+          <div class="vis-label">Salud</div>
+        </div>
+        <div class="vis-card vis-card-4">
+          <div class="vis-emoji">💻</div>
+          <div class="vis-label">Virtual</div>
+        </div>
+        <div class="vis-card vis-card-5">
+          <div class="vis-emoji">🎨</div>
+          <div class="vis-label">Arte y Diseño</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ╔══════ FILTERS ══════╗ -->
+<div id="filters" role="navigation" aria-label="Filtros de contenido">
+  <div class="container">
+    <div class="filter-scroll" role="tablist">
+      <button class="filter-btn active" data-filter="all" role="tab" aria-selected="true">
+        🏫 Todos <span class="filter-count">70+</span>
+      </button>
+      <button class="filter-btn" data-filter="centros" role="tab" aria-selected="false">
+        🎓 Centros Universitarios <span class="filter-count">20</span>
+      </button>
+      <button class="filter-btn" data-filter="prep" role="tab" aria-selected="false">
+        📚 Preparatorias <span class="filter-count">49+</span>
+      </button>
+      <button class="filter-btn" data-filter="admin" role="tab" aria-selected="false">
+        🏢 Administraciones <span class="filter-count">20</span>
+      </button>
+      <button class="filter-btn" data-filter="virtual" role="tab" aria-selected="false">
+        💻 Modalidad Virtual <span class="filter-count">10+</span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ╔══════ BUSCAR ══════╗ -->
+<section id="buscar" class="section" style="padding:48px 0 24px;" aria-label="Buscador">
+  <div class="container">
+    <div style="max-width:640px; margin:0 auto; text-align:center;">
+      <p class="section-eyebrow">🔎 Buscador Inteligente</p>
+      <h2 class="section-title" style="margin-bottom:24px;">Encuentra tu plantel</h2>
+      <div style="display:flex; gap:10px; align-items:center; background:white; border-radius:var(--r); padding:6px 6px 6px 20px; box-shadow:var(--shadow); border:1.5px solid rgba(58,48,40,.1);">
+        <input id="hero-search" type="text" placeholder="Nombre, siglas, municipio, carrera…"
+          style="flex:1; border:none; outline:none; font-size:15px; font-family:'Inter',sans-serif; color:var(--gris-o); background:transparent; padding:8px 0;"
+          aria-label="Buscador principal">
+        <button onclick="triggerSearch()" class="btn-primary" style="padding:10px 20px; border-radius:6px; font-size:14px;">Buscar</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ╔══════ CENTROS UNIVERSITARIOS ══════╗ -->
+<section id="centros" class="section section-data" data-section="centros" aria-labelledby="centros-title">
+  <div class="container">
+    <div class="section-header">
+      <p class="section-eyebrow">🎓 Centros Universitarios</p>
+      <h2 class="section-title" id="centros-title">Centros Universitarios de la Red UDG</h2>
+      <p class="section-sub">20 centros universitarios que cubren las distintas regiones de Jalisco, ofreciendo programas de licenciatura, posgrado e investigación de alto nivel.</p>
+      <div class="divider"></div>
+    </div>
+    <div class="cards-grid" id="centros-grid">
+
+      <!-- CUAAD -->
+      <article class="card fade-up" data-name="cuaad arte arquitectura diseño guadalajara">
+        <div class="card-banner mesh-cu-2"><span class="card-banner-emoji">🎨</span></div>
+        <div class="card-body">
+          <div class="card-siglas">CUAAD</div>
+          <h3 class="card-name">Centro Universitario de Arte, Arquitectura y Diseño</h3>
+          <p class="card-desc">Referente nacional en la formación de artistas, arquitectos y diseñadores. Impulsa la creatividad, la innovación y la cultura visual de México.</p>
+          <div class="card-meta">
+            <span class="tag municipio">📍 Guadalajara</span>
+            <span class="tag modalidad">Presencial</span>
+          </div>
+        </div>
+        <div class="card-actions">
+          <a href="https://maps.google.com/?q=CUAAD+Universidad+de+Guadalajara" target="_blank" rel="noopener" class="card-btn card-btn-ghost">🗺 Mapa</a>
+          <a href="https://www.cuaad.udg.mx" target="_blank" rel="noopener" class="card-btn card-btn-primary">Sitio Oficial</a>
+        </div>
+      </article>
+
+      <!-- CUCBA -->
+      <article class="card fade-up" data-name="cucba ciencias biológicas agropecuarias zapopan">
+        <div class="card-banner mesh-cu-4"><span class="card-banner-emoji">🌿</span></div>
+        <div class="card-body">
+          <div class="card-siglas">CUCBA</div>
+          <h3 class="card-name">Centro Universitario de Ciencias Biológico Agropecuarias</h3>
+          <p class="card-desc">Centro líder en ciencias de la vida, agronomía y veterinaria. Cuenta con laboratorios de vanguardia y campos experimentales únicos en el occidente del país.</p>
+          <div class="card-meta">
+            <span class="tag municipio">📍 Zapopan</span>
+            <span class="tag modalidad">Presencial</span>
+          </div>
+        </div>
+        <div class="card-actions">
+          <a href="https://maps.google.com/?q=CUCBA+Universidad+de+Guadalajara+Zapopan" target="_blank" rel="noopener" class="card-btn card-btn-ghost">🗺 Mapa</a>
+          <a href="https://www.cucba.udg.mx" target="_blank" rel="noopener" class="card-btn card-btn-primary">Sitio Oficial</a>
+        </div>
+      </article>
+
+      <!-- CUCEA -->
+      <article class="card fade-up" data-name="cucea ciencias económico administrativas zapopan">
+        <div class="card-banner mesh-cu-2"><span class="card-banner-emoji">📊</span></div>
+        <div class="card-body">
+          <div class="card-siglas">CUCEA</div>
+          <h3 class="card-name">Centro Universitario de Ciencias Económico Administrativas</h3>
+          <p class="card-desc">La mayor escuela de negocios y economía del occidente de México. Forma líderes empresariales, economistas y administradores con visión global.</p>
+          <div class="card-meta">
+            <span class="tag municipio">📍 Zapopan</span>
+            <span class="tag modalidad">Presencial / Virtual</span>
+          </div>
+        </div>
+        <div class="card-actions">
+          <a href="https://maps.google.com/?q=CUCEA+Universidad+de+Guadalajara" target="_blank" rel="noopener" class="card-btn card-btn-ghost">🗺 Mapa</a>
+          <a href="https://www.cucea.udg.mx" target="_blank" rel="noopener" class="card-btn card-btn-primary">Sitio Oficial</a>
+        </div>
+      </article>
+
+      <!-- CUCEI -->
+      <article class="card fade-up" data-name="cucei ciencias exactas ingenierías computación guadalajara">
+        <div class="card-banner mesh-cu-3"><span class="card-banner-emoji">⚙️</span></div>
+        <div class="card-body">
+          <div class="card-siglas">CUCEI</div>
+          <h3 class="card-name">Centro Universitario de Ciencias Exactas e Ingenierías</h3>
+          <p class="card-desc">El centro tecnológico más grande de la UDG. Forma ingenieros, científicos y matemáticos capaces de transformar la industria y la ciencia del país.</p>
+          <div class="card-meta">
+            <span class="tag municipio">📍 Guadalajara</span>
+            <span class="tag modalidad">Presencial</span>
+          </div>
+        </div>
+        <div class="card-actions">
+          <a href="https://maps.google.com/?q=CUCEI+Universidad+de+Guadalajara" target="_blank" rel="noopener" class="card-btn card-btn-ghost">🗺 Mapa</a>
+          <a href="https://www.cucei.udg.mx" target="_blank" rel="noopener" class="card-btn card-btn-primary">Sitio Oficial</a>
+        </div>
+      </article>
+
+      <!-- CUCS -->
+      <article class="card fade-up" data-name="cucs ciencias salud medicina enfermería guadalajara">
+        <div class="card-banner mesh-cu"><span class="card-banner-emoji">⚕️</span></div>
+        <div class="card-body">
+          <div class="card-siglas">CUCS</div>
+          <h3 class="card-name">Centro Universitario de Ciencias de la Salud</h3>
+          <p class="card-desc">Principal formador de profesionales de la salud en el occidente de México. Integra hospitales universitarios, clínicas y centros de investigación biomédica.</p>
+          <div class="card-meta">
+            <span class="tag municipio">📍 Guadalajara</span>
+            <span class="tag modalidad">Presencial</span>
+          </div>
+        </div>
+        <div class="card-actions">
+          <a href="https://maps.google.com/?q=CUCS+Universidad+de+Guadalajara" target="_blank" rel="noopener" class="card-btn card-btn-ghost">🗺 Mapa</a>
+          <a href="https://www.cucs.udg.mx" target="_blank" rel="noopener" class="card-btn card-btn-primary">Sitio Oficial</a>
+        </div>
+      </article>
+
+      <!-- CUCSH -->
+      <article class="card fade-up" data-name="cucsh ciencias sociales humanidades zapopan">
+        <div class="card-banner mesh-cu-6"><span class="card-banner-emoji">📖</span></div>
+        <div class="card-body">
+          <div class="card-siglas">CUCSH</div>
+          <h3 class="card-name">Centro Universitario de Ciencias Sociales y Humanidades</h3>
+          <p class="card-desc">Espacio de pensamiento crítico, ciencias sociales, comunicación, humanidades y ciencias políticas. Forma profesionales comprometidos con la sociedad.</p>
+          <div class="card-meta">
+            <span class="tag municipio">📍 Guadalajara</span>
+            <span class="tag modalidad">Presencial</span>
+          </div>
+        </div>
+        <div class="card-actions">
+          <a href="https://maps.google.com/?q=CUCSH+Universidad+de+Guadalajara" target="_blank" rel="noopener" class="card-btn card-btn-ghost">🗺 Mapa</a>
+          <a href="https://www.cucsh.udg.mx" target="_blank" rel="noopener" class="card-btn card-btn-primary">Sitio Oficial</a>
+        </div>
+      </article>
+
+      <!-- CUGDL -->
+      <article class="card fade-up" data-name="cugdl guadalajara centro universitario">
+        <div class="card-banner mesh-cu"><span class="card-banner-emoji">🏙️</span></div>
+        <div class="card-body">
+          <div class="card-siglas">CUGDL</div>
+          <h3 class="card-name">Centro Universitario de Guadalajara</h3>
+          <p class="card-desc">El más reciente centro universitario metropolitano, diseñado para atender la creciente demanda educativa en el corazón urbano de Guadalajara.</p>
+          <div class="card-meta">
+            <span class="tag municipio">📍 Guadalajara</span>
+            <span class="tag modalidad">Presencial</span>
+          </div>
+        </div>
+        <div class="card-actions">
+          <a href="https://maps.google.com/?q=CUGDL+Universidad+de+Guadalajara" target="_blank" rel="noopener" class="card-btn card-btn-ghost">🗺 Mapa</a>
+          <a href="https://www.udg.mx" target="_blank" rel="noopener" class="card-btn card-btn-primary">Sitio Oficial</a>
+        </div>
+      </article>
+
+      <!-- CUTLAJO -->
+      <article class="card fade-up" data-name="cutlajomulco tlajomulco">
+        <div class="card-banner mesh-cu-4"><span class="card-banner-emoji">🏗️</span></div>
+        <div class="card-body">
+          <div class="card-siglas">CUTLAJO</div>
+          <h3 class="card-name">Centro Universitario de Tlajomulco</h3>
+          <p class="card-desc">Centro universitario enfocado en las necesidades educativas del municipio de Tlajomulco de Zúñiga, uno de los de mayor crecimiento en Jalisco.</p>
+          <div class="card-meta">
+            <span class="tag municipio">📍 Tlajomulco de Zúñiga</span>
+            <span class="tag modalidad">Presencial</span>
+          </div>
+        </div>
+        <div class="card-actions">
+          <a href="https://maps.google.com/?q=CUTlajomulco+Universidad+de+Guadalajara" target="_blank" rel="noopener" class="card-btn card-btn-ghost">🗺 Mapa</a>
+          <a href="https://www.udg.mx" target="_blank" rel="noopener" class="card-btn card-btn-primary">Sitio Oficial</a>
+        </div>
+      </article>
+
+      <!-- CUTLAQUEPAQUE -->
+      <article class="card fade-up" data-name="cutlaquepaque tlaquepaque artesanía">
+        <div class="card-banner mesh-cu-2"><span class="card-banner-emoji">🏺</span></div>
+        <div class="card-body">
+          <div class="card-siglas">CUTLAQUEPAQUE</div>
+          <h3 class="card-name">Centro Universitario de Tlaquepaque</h3>
+          <p class="card-desc">Centro universitario en San Pedro Tlaquepaque, municipio reconocido mundialmente por su artesanía y tradición cultural, integrando educación y patrimonio local.</p>
+          <div class="card-meta">
+            <span class="tag municipio">📍 San Pedro Tlaquepaque</span>
+            <span class="tag modalidad">Presencial</span>
+          </div>
+        </div>
+        <div class="card-actions">
+          <a href="https://maps.google.com/?q=CUTlaquepaque+Universidad+de+Guadalajara" target="_blank" rel="noopener" class="card-btn card-btn-ghost">🗺 Mapa</a>
+          <a href="https://www.udg.mx" target="_blank" rel="noopener" class="card-btn card-btn-primary">Sitio Oficial</a>
+        </div>
+      </article>
+
+      <!-- CUTONALÁ -->
+      <article class="card fade-up" data-name="cutonalá tonalá diseño innovación">
+        <div class="card-banner mesh-cu-2"><span class="card-banner-emoji">🖼️</span></div>
+        <div class="card-body">
+          <div class="card-siglas">CUTONALÁ</div>
+          <h3 class="card-name">Centro Universitario de Tonalá</h3>
+          <p class="card-desc">Centro orientado a la innovación, el diseño y la biología marina. Potencia el talento creativo y científico en uno de los municipios más dinámicos del AMG.</p>
+          <div class="card-meta">
+            <span class="tag municipio">📍 Tonalá</span>
+            <span class="tag modalidad">Presencial</span>
+          </div>
+        </div>
+        <div class="card-actions">
+          <a href="https://maps.google.com/?q=CUTonalá+Universidad+de+Guadalajara" target="_blank" rel="noopener" class="card-btn card-btn-ghost">🗺 Mapa</a>
+          <a href="https://www.cutonala.udg.mx" target="_blank" rel="noopener" class="card-btn card-btn-primary">Sitio Oficial</a>
+        </div>
+      </article>
+
+      <!-- CUALTOS -->
+      <article class="card fade-up" data-name="cualtos altos jalisco tepatitlan">
+        <div class="card-banner mesh-cu-4"><span class="card-banner-emoji">🌾</span></div>
+        <div class="card-body">
+          <div class="card-siglas">CUALTOS</div>
+          <h3 class="card-name">Centro Universitario de los Altos</h3>
+          <p class="card-desc">Sirve a la región Altos de Jalisco, con fuerte vocación agropecuaria, de salud y ciencias sociales. Forma profesionales comprometidos con el desarrollo rural.</p>
+          <div class="card-meta">
+            <span class="tag municipio">📍 Tepatitlán de Morelos</span>
+            <span class="tag modalidad">Presencial</span>
+          </div>
+        </div>
+        <div class="card-actions">
+          <a href="https://maps.google.com/?q=CUAltos+Tepatitlan+Universidad+Guadalajara" target="_blank" rel="noopener" class="card-btn card-btn-ghost">🗺 Mapa</a>
+          <a href="https://www.cualtos.udg.mx" target="_blank" rel="noopener" class="card-btn card-btn-primary">Sitio Oficial</a>
+        </div>
+      </article>
+
+      <!-- CUCHAPALA -->
+      <article class="card fade-up" data-name="cuchapala chapala lago ambiente turismo">
+        <div class="card-banner mesh-cu-7"><span class="card-banner-emoji">🌊</span></div>
+        <div class="card-body">
+          <div class="card-siglas">CUCHAPALA</div>
+          <h3 class="card-name">Centro Universitario de la Ciénega — Chapala</h3>
+          <p class="card-desc">Ubicado junto al lago más grande de México, se orienta hacia ciencias ambientales, turismo y sustentabilidad del ecosistema lacustre.</p>
+          <div class="card-meta">
+            <span class="tag municipio">📍 Chapala</span>
+            <span class="tag modalidad">Presencial</span>
+          </div>
+        </div>
+        <div class="card-actions">
+          <a href="https://maps.google.com/?q=CUCHAPALA+Universidad+Guadalajara+Chapala" target="_blank" rel="noopener" class="card-btn card-btn-ghost">🗺 Mapa</a>
+          <a href="https://www.udg.mx" target="_blank" rel="noopener" class="card-btn card-btn-primary">Sitio Oficial</a>
+        </div>
+      </article>
+
+      <!-- CUCIÉNEGA -->
+      <article class="card fade-up" data-name="cucienega cienega ocotlán la barca">
+        <div class="card-banner mesh-cu-5"><span class="card-banner-emoji">🏭</span></div>
+        <div class="card-body">
+          <div class="card-siglas">CUCIÉNEGA</div>
+          <h3 class="card-name">Centro Universitario de la Ciénega</h3>
+          <p class="card-desc">Atiende la región Ciénega del estado, con oferta académica orientada a ingeniería, negocios y ciencias de la salud. Vinculado estrechamente a la industria regional.</p>
+          <div class="card-meta">
+            <span class="tag municipio">📍 Ocotlán</span>
+            <span class="tag modalidad">Presencial</span>
+          </div>
+        </div>
+        <div class="card-actions">
+          <a href="https://maps.google.com/?q=CUCienega+Ocotlan+Universidad+Guadalajara" target="_blank" rel="noopener" class="card-btn card-btn-ghost">🗺 Mapa</a>
+          <a href="https://www.cucienega.udg.mx" target="_blank" rel="noopener" class="card-btn card-btn-primary">Sitio Oficial</a>
+        </div>
+      </article>
+
+      <!-- CUCOSTA -->
+      <article class="card fade-up" data-name="cucosta costa jalisco puerto vallarta">
+        <div class="card-banner mesh-cu-7"><span class="card-banner-emoji">🏖️</span></div>
+        <div class="card-body">
+          <div class="card-siglas">CUCOSTA</div>
+          <h3 class="card-name">Centro Universitario de la Costa</h3>
+          <p class="card-desc">Situado en el destino turístico más famoso de México. Especializado en turismo, hotelería, ciencias del mar e ingeniería, con acceso privilegiado al entorno costero.</p>
+          <div class="card-meta">
+            <span class="tag municipio">📍 Puerto Vallarta</span>
+            <span class="tag modalidad">Presencial</span>
+          </div>
+        </div>
+        <div class="card-actions">
+          <a href="https://maps.google.com/?q=CUCosta+Puerto+Vallarta+Universidad+Guadalajara" target="_blank" rel="noopener" class="card-btn card-btn-ghost">🗺 Mapa</a>
+          <a href="https://www.cucosta.udg.mx" target="_blank" rel="noopener" class="card-btn card-btn-primary">Sitio Oficial</a>
+        </div>
+      </article>
+
+      <!-- CUCSUR -->
+      <article class="card fade-up" data-name="cucsur costa sur autlán">
+        <div class="card-banner mesh-cu-4"><span class="card-banner-emoji">🌴</span></div>
+        <div class="card-body">
+          <div class="card-siglas">CUCSUR</div>
+          <h3 class="card-name">Centro Universitario de la Costa Sur</h3>
+          <p class="card-desc">Cubre la región Costa Sur de Jalisco con programas en agronomía, administración, ciencias sociales e ingeniería ambiental, promoviendo el desarrollo regional sustentable.</p>
+          <div class="card-meta">
+            <span class="tag municipio">📍 Autlán de Navarro</span>
+            <span class="tag modalidad">Presencial</span>
+          </div>
+        </div>
+        <div class="card-actions">
+          <a href="https://maps.google.com/?q=CUCSur+Autlan+Universidad+Guadalajara" target="_blank" rel="noopener" class="card-btn card-btn-ghost">🗺 Mapa</a>
+          <a href="https://www.cucsur.udg.mx" target="_blank" rel="noopener" class="card-btn card-btn-primary">Sitio Oficial</a>
+        </div>
+      </article>
+
+      <!-- CULAGOS -->
+      <article class="card fade-up" data-name="culagos lagos moreno altos jalisco">
+        <div class="card-banner mesh-cu-6"><span class="card-banner-emoji">🏰</span></div>
+        <div class="card-body">
+          <div class="card-siglas">CULAGOS</div>
+          <h3 class="card-name">Centro Universitario de los Lagos</h3>
+          <p class="card-desc">Sirve a la región norte de los Altos de Jalisco con oferta en ingeniería, veterinaria, negocios y ciencias sociales. Impulsa el desarrollo del noreste del estado.</p>
+          <div class="card-meta">
+            <span class="tag municipio">📍 Lagos de Moreno</span>
+            <span class="tag modalidad">Presencial</span>
+          </div>
+        </div>
+        <div class="card-actions">
+          <a href="https://maps.google.com/?q=CULagos+Lagos+de+Moreno+Universidad+Guadalajara" target="_blank" rel="noopener" class="card-btn card-btn-ghost">🗺 Mapa</a>
+          <a href="https://www.culagos.udg.mx" target="_blank" rel="noopener" class="card-btn card-btn-primary">Sitio Oficial</a>
+        </div>
+      </article>
+
+      <!-- CUNORTE -->
+      <article class="card fade-up" data-name="cunorte norte jalisco colotlán">
+        <div class="card-banner mesh-cu-5"><span class="card-banner-emoji">🏜️</span></div>
+        <div class="card-body">
+          <div class="card-siglas">CUNORTE</div>
+          <h3 class="card-name">Centro Universitario del Norte</h3>
+          <p class="card-desc">Atiende la vasta región norte de Jalisco, históricamente desatendida. Ofrece programas que potencian el desarrollo agropecuario, minero y social de la zona.</p>
+          <div class="card-meta">
+            <span class="tag municipio">📍 Colotlán</span>
+            <span class="tag modalidad">Presencial</span>
+          </div>
+        </div>
+        <div class="card-actions">
+          <a href="https://maps.google.com/?q=CUNorte+Colotlan+Universidad+Guadalajara" target="_blank" rel="noopener" class="card-btn card-btn-ghost">🗺 Mapa</a>
+          <a href="https://www.cunorte.udg.mx" target="_blank" rel="noopener" class="card-btn card-btn-primary">Sitio Oficial</a>
+        </div>
+      </article>
+
+      <!-- CUSUR -->
+      <article class="card fade-up" data-name="cusur sur jalisco ciudad guzman">
+        <div class="card-banner mesh-cu-4"><span class="card-banner-emoji">⛰️</span></div>
+        <div class="card-body">
+          <div class="card-siglas">CUSUR</div>
+          <h3 class="card-name">Centro Universitario del Sur</h3>
+          <p class="card-desc">Centro de referencia para el sur de Jalisco. Oferta académica diversificada en salud, ingeniería, ciencias sociales y administración con vinculación a la industria regional.</p>
+          <div class="card-meta">
+            <span class="tag municipio">📍 Ciudad Guzmán</span>
+            <span class="tag modalidad">Presencial</span>
+          </div>
+        </div>
+        <div class="card-actions">
+          <a href="https://maps.google.com/?q=CUSur+Ciudad+Guzman+Universidad+Guadalajara" target="_blank" rel="noopener" class="card-btn card-btn-ghost">🗺 Mapa</a>
+          <a href="https://www.cusur.udg.mx" target="_blank" rel="noopener" class="card-btn card-btn-primary">Sitio Oficial</a>
+        </div>
+      </article>
+
+      <!-- CUVALLES -->
+      <article class="card fade-up" data-name="cuvalles valles jalisco ameca">
+        <div class="card-banner mesh-cu-4"><span class="card-banner-emoji">🌄</span></div>
+        <div class="card-body">
+          <div class="card-siglas">CUVALLES</div>
+          <h3 class="card-name">Centro Universitario de los Valles</h3>
+          <p class="card-desc">Atiende la región Valles de Jalisco con programas en salud, ingeniería y administración. Promotor del desarrollo socioeconómico de su región de influencia.</p>
+          <div class="card-meta">
+            <span class="tag municipio">📍 Ameca</span>
+            <span class="tag modalidad">Presencial</span>
+          </div>
+        </div>
+        <div class="card-actions">
+          <a href="https://maps.google.com/?q=CUValles+Ameca+Universidad+Guadalajara" target="_blank" rel="noopener" class="card-btn card-btn-ghost">🗺 Mapa</a>
+          <a href="https://www.cuvalles.udg.mx" target="_blank" rel="noopener" class="card-btn card-btn-primary">Sitio Oficial</a>
+        </div>
+      </article>
+
+      <!-- SUV -->
+      <article class="card fade-up" data-name="suv sistema universidad virtual online">
+        <div class="card-banner mesh-virt"><span class="card-banner-emoji">💻</span></div>
+        <div class="card-body">
+          <div class="card-siglas">SUV</div>
+          <h3 class="card-name">Sistema de Universidad Virtual</h3>
+          <p class="card-desc">Pionero en educación a distancia en México. Ofrece licenciaturas, posgrados y educación continua 100% en línea con acreditación internacional.</p>
+          <div class="card-meta">
+            <span class="tag municipio">📍 Guadalajara (modalidad virtual)</span>
+            <span class="tag modalidad">100% Virtual</span>
+          </div>
+        </div>
+        <div class="card-actions">
+          <a href="https://maps.google.com/?q=SUV+Universidad+Virtual+Guadalajara" target="_blank" rel="noopener" class="card-btn card-btn-ghost">🗺 Sede</a>
+          <a href="https://www.suv.udg.mx" target="_blank" rel="noopener" class="card-btn card-btn-primary">Sitio Oficial</a>
+        </div>
+      </article>
+
+    </div>
+    <div class="load-more-wrap" id="lm-wrap-centros">
+        <div class="load-more-bar"><div class="load-more-bar-fill" id="lm-bar-centros"></div></div>
+        <button class="load-more-btn" id="lm-btn-centros" onclick="loadMore('centros')">
+          <span>Ver más centros</span><span class="lm-icon">↓</span>
+        </button>
+        <span class="load-more-count" id="lm-count-centros"></span>
+      </div>
+      <div class="no-results" id="centros-no-results">
+      <div class="no-results-icon">🔍</div>
+      <h3>Sin resultados</h3>
+      <p>Intenta con otro término de búsqueda.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ╔══════ PREPARATORIAS ══════╗ -->
+<section id="preparatorias" class="section section-alt section-data" data-section="prep" aria-labelledby="prep-title">
+  <div class="container">
+    <div class="section-header">
+      <p class="section-eyebrow">📚 Sistema de Educación Media Superior</p>
+      <h2 class="section-title" id="prep-title">Preparatorias UDG</h2>
+      <p class="section-sub">La UDG opera el SEMS (Sistema de Educación Media Superior), que incluye preparatorias metropolitanas y regionales distribuidas por todo Jalisco.</p>
+      <div class="divider"></div>
+    </div>
+
+    <div class="sub-tabs" role="tablist" aria-label="Tipo de preparatoria">
+      <button class="sub-tab active" data-subtab="metro" role="tab" onclick="switchSubTab(this,'metro','prep-sub')">🏙️ Metropolitanas</button>
+      <button class="sub-tab" data-subtab="regional" role="tab" onclick="switchSubTab(this,'regional','prep-sub')">🗺️ Regionales</button>
+    </div>
+
+    <!-- Metropolitanas -->
+    <div id="metro" class="prep-subsection active-sub">
+      <div class="prep-grid">
+
+        <article class="prep-card fade-up" data-name="preparatoria 1 guadalajara">
+          <div class="prep-banner mesh-prep"><span style="font-size:1.8rem">📗</span></div>
+          <div class="prep-body">
+            <div class="prep-num">PREP · No. 1</div>
+            <div class="prep-name">Preparatoria No. 1</div>
+            <div class="prep-loc">📍 Guadalajara</div>
+          </div>
+          <div class="prep-actions">
+            <a href="https://maps.google.com/?q=Preparatoria+1+UDG+Guadalajara" target="_blank" rel="noopener" class="card-btn card-btn-ghost" style="font-size:11px;">🗺 Mapa</a>
+            <a href="https://www.sems.udg.mx" target="_blank" rel="noopener" class="card-btn card-btn-primary" style="font-size:11px;">Sitio</a>
+          </div>
+        </article>
+
+        <article class="prep-card fade-up" data-name="preparatoria 2 guadalajara">
+          <div class="prep-banner mesh-prep2"><span style="font-size:1.8rem">📘</span></div>
+          <div class="prep-body">
+            <div class="prep-num">PREP · No. 2</div>
+            <div class="prep-name">Preparatoria No. 2</div>
+            <div class="prep-loc">📍 Guadalajara</div>
+          </div>
+          <div class="prep-actions">
+            <a href="https://maps.google.com/?q=Preparatoria+2+UDG+Guadalajara" target="_blank" rel="noopener" class="card-btn card-btn-ghost" style="font-size:11px;">🗺 Mapa</a>
+            <a href="https://www.sems.udg.mx" target="_blank" rel="noopener" class="card-btn card-btn-primary" style="font-size:11px;">Sitio</a>
+          </div>
+        </article>
+
+        <article class="prep-card fade-up" data-name="preparatoria 3 guadalajara">
+          <div class="prep-banner mesh-prep"><span style="font-size:1.8rem">📙</span></div>
+          <div class="prep-body">
+            <div class="prep-num">PREP · No. 3</div>
+            <div class="prep-name">Preparatoria No. 3</div>
+            <div class="prep-loc">📍 Guadalajara</div>
+          </div>
+          <div class="prep-actions">
+            <a href="https://maps.google.com/?q=Preparatoria+3+UDG+Guadalajara" target="_blank" rel="noopener" class="card-btn card-btn-ghost" style="font-size:11px;">🗺 Mapa</a>
+            <a href="https://www.sems.udg.mx" target="_blank" rel="noopener" class="card-btn card-btn-primary" style="font-size:11px;">Sitio</a>
+          </div>
+        </article>
+
+        <!-- Preps 4-20 generados de forma compacta -->
+        <article class="prep-card fade-up" data-name="preparatoria 4 guadalajara"><div class="prep-banner mesh-prep2"><span style="font-size:1.8rem">📕</span></div><div class="prep-body"><div class="prep-num">PREP · No. 4</div><div class="prep-name">Preparatoria No. 4</div><div class="prep-loc">📍 Guadalajara</div></div><div class="prep-actions"><a href="https://maps.google.com/?q=Preparatoria+4+UDG" target="_blank" rel="noopener" class="card-btn card-btn-ghost" style="font-size:11px;">🗺 Mapa</a><a href="https://www.sems.udg.mx" target="_blank" rel="noopener" class="card-btn card-btn-primary" style="font-size:11px;">Sitio</a></div></article>
+
+        <article class="prep-card fade-up" data-name="preparatoria 5 guadalajara"><div class="prep-banner mesh-prep"><span style="font-size:1.8rem">📓</span></div><div class="prep-body"><div class="prep-num">PREP · No. 5</div><div class="prep-name">Preparatoria No. 5</div><div class="prep-loc">📍 Guadalajara</div></div><div class="prep-actions"><a href="https://maps.google.com/?q=Preparatoria+5+UDG" target="_blank" rel="noopener" class="card-btn card-btn-ghost" style="font-size:11px;">🗺 Mapa</a><a href="https://www.sems.udg.mx" target="_blank" rel="noopener" class="card-btn card-btn-primary" style="font-size:11px;">Sitio</a></div></article>
+
+        <article class="prep-card fade-up" data-name="preparatoria 6 zapopan"><div class="prep-banner mesh-prep2"><span style="font-size:1.8rem">📒</span></div><div class="prep-body"><div class="prep-num">PREP · No. 6</div><div class="prep-name">Preparatoria No. 6</div><div class="prep-loc">📍 Zapopan</div></div><div class="prep-actions"><a href="https://maps.google.com/?q=Preparatoria+6+UDG+Zapopan" target="_blank" rel="noopener" class="card-btn card-btn-ghost" style="font-size:11px;">🗺 Mapa</a><a href="https://www.sems.udg.mx" target="_blank" rel="noopener" class="card-btn card-btn-primary" style="font-size:11px;">Sitio</a></div></article>
+
+        <article class="prep-card fade-up" data-name="preparatoria 7 guadalajara"><div class="prep-banner mesh-prep"><span style="font-size:1.8rem">📚</span></div><div class="prep-body"><div class="prep-num">PREP · No. 7</div><div class="prep-name">Preparatoria No. 7</div><div class="prep-loc">📍 Guadalajara</div></div><div class="prep-actions"><a href="https://maps.google.com/?q=Preparatoria+7+UDG" target="_blank" rel="noopener" class="card-btn card-btn-ghost" style="font-size:11px;">🗺 Mapa</a><a href="https://www.sems.udg.mx" target="_blank" rel="noopener" class="card-btn card-btn-primary" style="font-size:11px;">Sitio</a></div></article>
+
+        <article class="prep-card fade-up" data-name="preparatoria 8 zapopan"><div class="prep-banner mesh-prep2"><span style="font-size:1.8rem">🎒</span></div><div class="prep-body"><div class="prep-num">PREP · No. 8</div><div class="prep-name">Preparatoria No. 8</div><div class="prep-loc">📍 Zapopan</div></div><div class="prep-actions"><a href="https://maps.google.com/?q=Preparatoria+8+UDG+Zapopan" target="_blank" rel="noopener" class="card-btn card-btn-ghost" style="font-size:11px;">🗺 Mapa</a><a href="https://www.sems.udg.mx" target="_blank" rel="noopener" class="card-btn card-btn-primary" style="font-size:11px;">Sitio</a></div></article>
+
+        <article class="prep-card fade-up" data-name="preparatoria 9 guadalajara"><div class="prep-banner mesh-prep"><span style="font-size:1.8rem">✏️</span></div><div class="prep-body"><div class="prep-num">PREP · No. 9</div><div class="prep-name">Preparatoria No. 9</div><div class="prep-loc">📍 Guadalajara</div></div><div class="prep-actions"><a href="https://maps.google.com/?q=Preparatoria+9+UDG" target="_blank" rel="noopener" class="card-btn card-btn-ghost" style="font-size:11px;">🗺 Mapa</a><a href="https://www.sems.udg.mx" target="_blank" rel="noopener" class="card-btn card-btn-primary" style="font-size:11px;">Sitio</a></div></article>
+
+        <article class="prep-card fade-up" data-name="preparatoria 10 guadalajara"><div class="prep-banner mesh-prep2"><span style="font-size:1.8rem">📐</span></div><div class="prep-body"><div class="prep-num">PREP · No. 10</div><div class="prep-name">Preparatoria No. 10</div><div class="prep-loc">📍 Guadalajara</div></div><div class="prep-actions"><a href="https://maps.google.com/?q=Preparatoria+10+UDG" target="_blank" rel="noopener" class="card-btn card-btn-ghost" style="font-size:11px;">🗺 Mapa</a><a href="https://www.sems.udg.mx" target="_blank" rel="noopener" class="card-btn card-btn-primary" style="font-size:11px;">Sitio</a></div></article>
+
+        <article class="prep-card fade-up" data-name="preparatoria 11 tlaquepaque"><div class="prep-banner mesh-prep"><span style="font-size:1.8rem">🖊️</span></div><div class="prep-body"><div class="prep-num">PREP · No. 11</div><div class="prep-name">Preparatoria No. 11</div><div class="prep-loc">📍 Tlaquepaque</div></div><div class="prep-actions"><a href="https://maps.google.com/?q=Preparatoria+11+UDG+Tlaquepaque" target="_blank" rel="noopener" class="card-btn card-btn-ghost" style="font-size:11px;">🗺 Mapa</a><a href="https://www.sems.udg.mx" target="_blank" rel="noopener" class="card-btn card-btn-primary" style="font-size:11px;">Sitio</a></div></article>
+
+        <article class="prep-card fade-up" data-name="preparatoria 12 zapopan"><div class="prep-banner mesh-prep2"><span style="font-size:1.8rem">📔</span></div><div class="prep-body"><div class="prep-num">PREP · No. 12</div><div class="prep-name">Preparatoria No. 12</div><div class="prep-loc">📍 Zapopan</div></div><div class="prep-actions"><a href="https://maps.google.com/?q=Preparatoria+12+UDG+Zapopan" target="_blank" rel="noopener" class="card-btn card-btn-ghost" style="font-size:11px;">🗺 Mapa</a><a href="https://www.sems.udg.mx" target="_blank" rel="noopener" class="card-btn card-btn-primary" style="font-size:11px;">Sitio</a></div></article>
+
+        <article class="prep-card fade-up" data-name="preparatoria 13 guadalajara"><div class="prep-banner mesh-prep"><span style="font-size:1.8rem">🎓</span></div><div class="prep-body"><div class="prep-num">PREP · No. 13</div><div class="prep-name">Preparatoria No. 13</div><div class="prep-loc">📍 Guadalajara</div></div><div class="prep-actions"><a href="https://maps.google.com/?q=Preparatoria+13+UDG" target="_blank" rel="noopener" class="card-btn card-btn-ghost" style="font-size:11px;">🗺 Mapa</a><a href="https://www.sems.udg.mx" target="_blank" rel="noopener" class="card-btn card-btn-primary" style="font-size:11px;">Sitio</a></div></article>
+
+        <article class="prep-card fade-up" data-name="preparatoria 14 guadalajara"><div class="prep-banner mesh-prep2"><span style="font-size:1.8rem">🏫</span></div><div class="prep-body"><div class="prep-num">PREP · No. 14</div><div class="prep-name">Preparatoria No. 14</div><div class="prep-loc">📍 Guadalajara</div></div><div class="prep-actions"><a href="https://maps.google.com/?q=Preparatoria+14+UDG" target="_blank" rel="noopener" class="card-btn card-btn-ghost" style="font-size:11px;">🗺 Mapa</a><a href="https://www.sems.udg.mx" target="_blank" rel="noopener" class="card-btn card-btn-primary" style="font-size:11px;">Sitio</a></div></article>
+
+        <article class="prep-card fade-up" data-name="preparatoria 15 tlaquepaque"><div class="prep-banner mesh-prep"><span style="font-size:1.8rem">📖</span></div><div class="prep-body"><div class="prep-num">PREP · No. 15</div><div class="prep-name">Preparatoria No. 15</div><div class="prep-loc">📍 Tlaquepaque</div></div><div class="prep-actions"><a href="https://maps.google.com/?q=Preparatoria+15+UDG+Tlaquepaque" target="_blank" rel="noopener" class="card-btn card-btn-ghost" style="font-size:11px;">🗺 Mapa</a><a href="https://www.sems.udg.mx" target="_blank" rel="noopener" class="card-btn card-btn-primary" style="font-size:11px;">Sitio</a></div></article>
+
+        <article class="prep-card fade-up" data-name="preparatoria 16 zapopan"><div class="prep-banner mesh-prep2"><span style="font-size:1.8rem">📝</span></div><div class="prep-body"><div class="prep-num">PREP · No. 16</div><div class="prep-name">Preparatoria No. 16</div><div class="prep-loc">📍 Zapopan</div></div><div class="prep-actions"><a href="https://maps.google.com/?q=Preparatoria+16+UDG+Zapopan" target="_blank" rel="noopener" class="card-btn card-btn-ghost" style="font-size:11px;">🗺 Mapa</a><a href="https://www.sems.udg.mx" target="_blank" rel="noopener" class="card-btn card-btn-primary" style="font-size:11px;">Sitio</a></div></article>
+
+        <article class="prep-card fade-up" data-name="preparatoria 17 guadalajara"><div class="prep-banner mesh-prep"><span style="font-size:1.8rem">🖇️</span></div><div class="prep-body"><div class="prep-num">PREP · No. 17</div><div class="prep-name">Preparatoria No. 17</div><div class="prep-loc">📍 Guadalajara</div></div><div class="prep-actions"><a href="https://maps.google.com/?q=Preparatoria+17+UDG" target="_blank" rel="noopener" class="card-btn card-btn-ghost" style="font-size:11px;">🗺 Mapa</a><a href="https://www.sems.udg.mx" target="_blank" rel="noopener" class="card-btn card-btn-primary" style="font-size:11px;">Sitio</a></div></article>
+
+        <article class="prep-card fade-up" data-name="preparatoria 18 zapopan"><div class="prep-banner mesh-prep2"><span style="font-size:1.8rem">📑</span></div><div class="prep-body"><div class="prep-num">PREP · No. 18</div><div class="prep-name">Preparatoria No. 18</div><div class="prep-loc">📍 Zapopan</div></div><div class="prep-actions"><a href="https://maps.google.com/?q=Preparatoria+18+UDG+Zapopan" target="_blank" rel="noopener" class="card-btn card-btn-ghost" style="font-size:11px;">🗺 Mapa</a><a href="https://www.sems.udg.mx" target="_blank" rel="noopener" class="card-btn card-btn-primary" style="font-size:11px;">Sitio</a></div></article>
+
+        <article class="prep-card fade-up" data-name="preparatoria 19 tonala"><div class="prep-banner mesh-prep"><span style="font-size:1.8rem">🏛️</span></div><div class="prep-body"><div class="prep-num">PREP · No. 19</div><div class="prep-name">Preparatoria No. 19</div><div class="prep-loc">📍 Tonalá</div></div><div class="prep-actions"><a href="https://maps.google.com/?q=Preparatoria+19+UDG+Tonala" target="_blank" rel="noopener" class="card-btn card-btn-ghost" style="font-size:11px;">🗺 Mapa</a><a href="https://www.sems.udg.mx" target="_blank" rel="noopener" class="card-btn card-btn-primary" style="font-size:11px;">Sitio</a></div></article>
+
+        <article class="prep-card fade-up" data-name="preparatoria 20 guadalajara"><div class="prep-banner mesh-prep2"><span style="font-size:1.8rem">🎒</span></div><div class="prep-body"><div class="prep-num">PREP · No. 20</div><div class="prep-name">Preparatoria No. 20</div><div class="prep-loc">📍 Guadalajara</div></div><div class="prep-actions"><a href="https://maps.google.com/?q=Preparatoria+20+UDG" target="_blank" rel="noopener" class="card-btn card-btn-ghost" style="font-size:11px;">🗺 Mapa</a><a href="https://www.sems.udg.mx" target="_blank" rel="noopener" class="card-btn card-btn-primary" style="font-size:11px;">Sitio</a></div></article>
+
+        <article class="prep-card fade-up" data-name="preparatoria tonalá"><div class="prep-banner mesh-prep"><span style="font-size:1.8rem">🏺</span></div><div class="prep-body"><div class="prep-num">PREP · TONALÁ</div><div class="prep-name">Preparatoria de Tonalá</div><div class="prep-loc">📍 Tonalá</div></div><div class="prep-actions"><a href="https://maps.google.com/?q=Preparatoria+Tonala+UDG" target="_blank" rel="noopener" class="card-btn card-btn-ghost" style="font-size:11px;">🗺 Mapa</a><a href="https://www.sems.udg.mx" target="_blank" rel="noopener" class="card-btn card-btn-primary" style="font-size:11px;">Sitio</a></div></article>
+
+        <article class="prep-card fade-up" data-name="preparatoria tlaquepaque"><div class="prep-banner mesh-prep2"><span style="font-size:1.8rem">🎨</span></div><div class="prep-body"><div class="prep-num">PREP · TLAQUEPAQUE</div><div class="prep-name">Preparatoria de Tlaquepaque</div><div class="prep-loc">📍 Tlaquepaque</div></div><div class="prep-actions"><a href="https://maps.google.com/?q=Preparatoria+Tlaquepaque+UDG" target="_blank" rel="noopener" class="card-btn card-btn-ghost" style="font-size:11px;">🗺 Mapa</a><a href="https://www.sems.udg.mx" target="_blank" rel="noopener" class="card-btn card-btn-primary" style="font-size:11px;">Sitio</a></div></article>
+
+        <article class="prep-card fade-up" data-name="preparatoria tlajomulco"><div class="prep-banner mesh-prep"><span style="font-size:1.8rem">🏗️</span></div><div class="prep-body"><div class="prep-num">PREP · TLAJOMULCO</div><div class="prep-name">Preparatoria de Tlajomulco</div><div class="prep-loc">📍 Tlajomulco de Zúñiga</div></div><div class="prep-actions"><a href="https://maps.google.com/?q=Preparatoria+Tlajomulco+UDG" target="_blank" rel="noopener" class="card-btn card-btn-ghost" style="font-size:11px;">🗺 Mapa</a><a href="https://www.sems.udg.mx" target="_blank" rel="noopener" class="card-btn card-btn-primary" style="font-size:11px;">Sitio</a></div></article>
+
+        <article class="prep-card fade-up" data-name="preparatoria zapotlanejo"><div class="prep-banner mesh-prep2"><span style="font-size:1.8rem">🌾</span></div><div class="prep-body"><div class="prep-num">PREP · ZAPOTLANEJO</div><div class="prep-name">Preparatoria Regional de Zapotlanejo</div><div class="prep-loc">📍 Zapotlanejo</div></div><div class="prep-actions"><a href="https://maps.google.com/?q=Preparatoria+Zapotlanejo+UDG" target="_blank" rel="noopener" class="card-btn card-btn-ghost" style="font-size:11px;">🗺 Mapa</a><a href="https://www.sems.udg.mx" target="_blank" rel="noopener" class="card-btn card-btn-primary" style="font-size:11px;">Sitio</a></div></article>
+      </div>
+        <div class="load-more-wrap" id="lm-wrap-metro">
+          <div class="load-more-bar"><div class="load-more-bar-fill" id="lm-bar-metro"></div></div>
+          <button class="load-more-btn" id="lm-btn-metro" onclick="loadMore('metro')">
+            <span>Ver más preparatorias</span><span class="lm-icon">↓</span>
+          </button>
+          <span class="load-more-count" id="lm-count-metro"></span>
+        </div>
+    </div>
+
+    <!-- Regionales -->
+    <div id="regional" class="prep-subsection">
+      <div class="prep-grid" id="regionales-grid">
+        <article class="prep-card fade-up" data-name="preparatoria ameca valles"><div class="prep-banner mesh-prep"><span style="font-size:1.8rem">🌄</span></div><div class="prep-body"><div class="prep-num">REG · AMECA</div><div class="prep-name">Preparatoria Regional de Ameca</div><div class="prep-loc">📍 Ameca</div></div><div class="prep-actions"><a href="https://maps.google.com/?q=Preparatoria+Regional+Ameca+UDG" target="_blank" rel="noopener" class="card-btn card-btn-ghost" style="font-size:11px;">🗺 Mapa</a><a href="https://www.sems.udg.mx" target="_blank" rel="noopener" class="card-btn card-btn-primary" style="font-size:11px;">Sitio</a></div></article>
+
+        <article class="prep-card fade-up" data-name="preparatoria arandas altos jalisco"><div class="prep-banner mesh-prep2"><span style="font-size:1.8rem">🐄</span></div><div class="prep-body"><div class="prep-num">REG · ARANDAS</div><div class="prep-name">Preparatoria Regional de Arandas</div><div class="prep-loc">📍 Arandas</div></div><div class="prep-actions"><a href="https://maps.google.com/?q=Preparatoria+Regional+Arandas+UDG" target="_blank" rel="noopener" class="card-btn card-btn-ghost" style="font-size:11px;">🗺 Mapa</a><a href="https://www.sems.udg.mx" target="_blank" rel="noopener" class="card-btn card-btn-primary" style="font-size:11px;">Sitio</a></div></article>
+
+        <article class="prep-card fade-up" data-name="preparatoria atotonilco"><div class="prep-banner mesh-prep"><span style="font-size:1.8rem">🌿</span></div><div class="prep-body"><div class="prep-num">REG · ATOTONILCO</div><div class="prep-name">Preparatoria Regional de Atotonilco</div><div class="prep-loc">📍 Atotonilco el Alto</div></div><div class="prep-actions"><a href="https://maps.google.com/?q=Preparatoria+Regional+Atotonilco+UDG" target="_blank" rel="noopener" class="card-btn card-btn-ghost" style="font-size:11px;">🗺 Mapa</a><a href="https://www.sems.udg.mx" target="_blank" rel="noopener" class="card-btn card-btn-primary" style="font-size:11px;">Sitio</a></div></article>
+
+        <article class="prep-card fade-up" data-name="preparatoria autlán costa sur"><div class="prep-banner mesh-prep2"><span style="font-size:1.8rem">🌴</span></div><div class="prep-body"><div class="prep-num">REG · AUTLÁN</div><div class="prep-name">Preparatoria Regional de Autlán</div><div class="prep-loc">📍 Autlán de Navarro</div></div><div class="prep-actions"><a href="https://maps.google.com/?q=Preparatoria+Regional+Autlan+UDG" target="_blank" rel="noopener" class="card-btn card-btn-ghost" style="font-size:11px;">🗺 Mapa</a><a href="https://www.sems.udg.mx" target="_blank" rel="noopener" class="card-btn card-btn-primary" style="font-size:11px;">Sitio</a></div></article>
+
+        <article class="prep-card fade-up" data-name="preparatoria casimiro castillo"><div class="prep-banner mesh-prep"><span style="font-size:1.8rem">🏔️</span></div><div class="prep-body"><div class="prep-num">REG · CASIMIRO</div><div class="prep-name">Preparatoria Regional de Casimiro Castillo</div><div class="prep-loc">📍 Casimiro Castillo</div></div><div class="prep-actions"><a href="https://maps.google.com/?q=Preparatoria+Regional+Casimiro+Castillo+UDG" target="_blank" rel="noopener" class="card-btn card-btn-ghost" style="font-size:11px;">🗺 Mapa</a><a href="https://www.sems.udg.mx" target="_blank" rel="noopener" class="card-btn card-btn-primary" style="font-size:11px;">Sitio</a></div></article>
+
+        <article class="prep-card fade-up" data-name="preparatoria chapala lago"><div class="prep-banner mesh-prep2"><span style="font-size:1.8rem">🌊</span></div><div class="prep-body"><div class="prep-num">REG · CHAPALA</div><div class="prep-name">Preparatoria Regional de Chapala</div><div class="prep-loc">📍 Chapala</div></div><div class="prep-actions"><a href="https://maps.google.com/?q=Preparatoria+Regional+Chapala+UDG" target="_blank" rel="noopener" class="card-btn card-btn-ghost" style="font-size:11px;">🗺 Mapa</a><a href="https://www.sems.udg.mx" target="_blank" rel="noopener" class="card-btn card-btn-primary" style="font-size:11px;">Sitio</a></div></article>
+
+        <article class="prep-card fade-up" data-name="preparatoria cihuatlán costa jalisco"><div class="prep-banner mesh-prep"><span style="font-size:1.8rem">🏖️</span></div><div class="prep-body"><div class="prep-num">REG · CIHUATLÁN</div><div class="prep-name">Preparatoria Regional de Cihuatlán</div><div class="prep-loc">📍 Cihuatlán</div></div><div class="prep-actions"><a href="https://maps.google.com/?q=Preparatoria+Regional+Cihuatlan+UDG" target="_blank" rel="noopener" class="card-btn card-btn-ghost" style="font-size:11px;">🗺 Mapa</a><a href="https://www.sems.udg.mx" target="_blank" rel="noopener" class="card-btn card-btn-primary" style="font-size:11px;">Sitio</a></div></article>
+
+        <article class="prep-card fade-up" data-name="preparatoria ciudad guzman sur jalisco"><div class="prep-banner mesh-prep2"><span style="font-size:1.8rem">⛰️</span></div><div class="prep-body"><div class="prep-num">REG · CD. GUZMÁN</div><div class="prep-name">Preparatoria Regional de Ciudad Guzmán</div><div class="prep-loc">📍 Ciudad Guzmán</div></div><div class="prep-actions"><a href="https://maps.google.com/?q=Preparatoria+Regional+Ciudad+Guzman+UDG" target="_blank" rel="noopener" class="card-btn card-btn-ghost" style="font-size:11px;">🗺 Mapa</a><a href="https://www.sems.udg.mx" target="_blank" rel="noopener" class="card-btn card-btn-primary" style="font-size:11px;">Sitio</a></div></article>
+
+        <article class="prep-card fade-up" data-name="preparatoria colotlán norte jalisco"><div class="prep-banner mesh-prep"><span style="font-size:1.8rem">🏜️</span></div><div class="prep-body"><div class="prep-num">REG · COLOTLÁN</div><div class="prep-name">Preparatoria Regional de Colotlán</div><div class="prep-loc">📍 Colotlán</div></div><div class="prep-actions"><a href="https://maps.google.com/?q=Preparatoria+Regional+Colotlan+UDG" target="_blank" rel="noopener" class="card-btn card-btn-ghost" style="font-size:11px;">🗺 Mapa</a><a href="https://www.sems.udg.mx" target="_blank" rel="noopener" class="card-btn card-btn-primary" style="font-size:11px;">Sitio</a></div></article>
+
+        <article class="prep-card fade-up" data-name="preparatoria degollado altos"><div class="prep-banner mesh-prep2"><span style="font-size:1.8rem">🌾</span></div><div class="prep-body"><div class="prep-num">REG · DEGOLLADO</div><div class="prep-name">Preparatoria Regional de Degollado</div><div class="prep-loc">📍 Degollado</div></div><div class="prep-actions"><a href="https://maps.google.com/?q=Preparatoria+Regional+Degollado+UDG" target="_blank" rel="noopener" class="card-btn card-btn-ghost" style="font-size:11px;">🗺 Mapa</a><a href="https://www.sems.udg.mx" target="_blank" rel="noopener" class="card-btn card-btn-primary" style="font-size:11px;">Sitio</a></div></article>
+
+        <article class="prep-card fade-up" data-name="preparatoria el grullo"><div class="prep-banner mesh-prep"><span style="font-size:1.8rem">🌵</span></div><div class="prep-body"><div class="prep-num">REG · EL GRULLO</div><div class="prep-name">Preparatoria Regional de El Grullo</div><div class="prep-loc">📍 El Grullo</div></div><div class="prep-actions"><a href="https://maps.google.com/?q=Preparatoria+Regional+El+Grullo+UDG" target="_blank" rel="noopener" class="card-btn card-btn-ghost" style="font-size:11px;">🗺 Mapa</a><a href="https://www.sems.udg.mx" target="_blank" rel="noopener" class="card-btn card-btn-primary" style="font-size:11px;">Sitio</a></div></article>
+
+        <article class="prep-card fade-up" data-name="preparatoria etzatlán"><div class="prep-banner mesh-prep2"><span style="font-size:1.8rem">⛪</span></div><div class="prep-body"><div class="prep-num">REG · ETZATLÁN</div><div class="prep-name">Preparatoria Regional de Etzatlán</div><div class="prep-loc">📍 Etzatlán</div></div><div class="prep-actions"><a href="https://maps.google.com/?q=Preparatoria+Regional+Etzatlan+UDG" target="_blank" rel="noopener" class="card-btn card-btn-ghost" style="font-size:11px;">🗺 Mapa</a><a href="https://www.sems.udg.mx" target="_blank" rel="noopener" class="card-btn card-btn-primary" style="font-size:11px;">Sitio</a></div></article>
+
+        <article class="prep-card fade-up" data-name="preparatoria jocotepec lago jalisco"><div class="prep-banner mesh-prep"><span style="font-size:1.8rem">⛵</span></div><div class="prep-body"><div class="prep-num">REG · JOCOTEPEC</div><div class="prep-name">Preparatoria Regional de Jocotepec</div><div class="prep-loc">📍 Jocotepec</div></div><div class="prep-actions"><a href="https://maps.google.com/?q=Preparatoria+Regional+Jocotepec+UDG" target="_blank" rel="noopener" class="card-btn card-btn-ghost" style="font-size:11px;">🗺 Mapa</a><a href="https://www.sems.udg.mx" target="_blank" rel="noopener" class="card-btn card-btn-primary" style="font-size:11px;">Sitio</a></div></article>
+
+        <article class="prep-card fade-up" data-name="preparatoria la barca cienega"><div class="prep-banner mesh-prep2"><span style="font-size:1.8rem">🚢</span></div><div class="prep-body"><div class="prep-num">REG · LA BARCA</div><div class="prep-name">Preparatoria Regional de La Barca</div><div class="prep-loc">📍 La Barca</div></div><div class="prep-actions"><a href="https://maps.google.com/?q=Preparatoria+Regional+La+Barca+UDG" target="_blank" rel="noopener" class="card-btn card-btn-ghost" style="font-size:11px;">🗺 Mapa</a><a href="https://www.sems.udg.mx" target="_blank" rel="noopener" class="card-btn card-btn-primary" style="font-size:11px;">Sitio</a></div></article>
+
+        <article class="prep-card fade-up" data-name="preparatoria lagos de moreno altos"><div class="prep-banner mesh-prep"><span style="font-size:1.8rem">🏰</span></div><div class="prep-body"><div class="prep-num">REG · LAGOS</div><div class="prep-name">Preparatoria Regional de Lagos de Moreno</div><div class="prep-loc">📍 Lagos de Moreno</div></div><div class="prep-actions"><a href="https://maps.google.com/?q=Preparatoria+Regional+Lagos+de+Moreno+UDG" target="_blank" rel="noopener" class="card-btn card-btn-ghost" style="font-size:11px;">🗺 Mapa</a><a href="https://www.sems.udg.mx" target="_blank" rel="noopener" class="card-btn card-btn-primary" style="font-size:11px;">Sitio</a></div></article>
+
+        <article class="prep-card fade-up" data-name="preparatoria puerto vallarta costa turismo"><div class="prep-banner mesh-prep2"><span style="font-size:1.8rem">🌅</span></div><div class="prep-body"><div class="prep-num">REG · PTO. VALLARTA</div><div class="prep-name">Preparatoria Regional de Puerto Vallarta</div><div class="prep-loc">📍 Puerto Vallarta</div></div><div class="prep-actions"><a href="https://maps.google.com/?q=Preparatoria+Regional+Puerto+Vallarta+UDG" target="_blank" rel="noopener" class="card-btn card-btn-ghost" style="font-size:11px;">🗺 Mapa</a><a href="https://www.sems.udg.mx" target="_blank" rel="noopener" class="card-btn card-btn-primary" style="font-size:11px;">Sitio</a></div></article>
+
+        <article class="prep-card fade-up" data-name="preparatoria san juan de los lagos altos"><div class="prep-banner mesh-prep"><span style="font-size:1.8rem">⛪</span></div><div class="prep-body"><div class="prep-num">REG · SAN JUAN</div><div class="prep-name">Preparatoria Regional de San Juan de los Lagos</div><div class="prep-loc">📍 San Juan de los Lagos</div></div><div class="prep-actions"><a href="https://maps.google.com/?q=Preparatoria+Regional+San+Juan+Lagos+UDG" target="_blank" rel="noopener" class="card-btn card-btn-ghost" style="font-size:11px;">🗺 Mapa</a><a href="https://www.sems.udg.mx" target="_blank" rel="noopener" class="card-btn card-btn-primary" style="font-size:11px;">Sitio</a></div></article>
+
+        <article class="prep-card fade-up" data-name="preparatoria sayula sur jalisco"><div class="prep-banner mesh-prep2"><span style="font-size:1.8rem">🏡</span></div><div class="prep-body"><div class="prep-num">REG · SAYULA</div><div class="prep-name">Preparatoria Regional de Sayula</div><div class="prep-loc">📍 Sayula</div></div><div class="prep-actions"><a href="https://maps.google.com/?q=Preparatoria+Regional+Sayula+UDG" target="_blank" rel="noopener" class="card-btn card-btn-ghost" style="font-size:11px;">🗺 Mapa</a><a href="https://www.sems.udg.mx" target="_blank" rel="noopener" class="card-btn card-btn-primary" style="font-size:11px;">Sitio</a></div></article>
+
+        <article class="prep-card fade-up" data-name="preparatoria tala valles jalisco"><div class="prep-banner mesh-prep"><span style="font-size:1.8rem">🌲</span></div><div class="prep-body"><div class="prep-num">REG · TALA</div><div class="prep-name">Preparatoria Regional de Tala</div><div class="prep-loc">📍 Tala</div></div><div class="prep-actions"><a href="https://maps.google.com/?q=Preparatoria+Regional+Tala+UDG" target="_blank" rel="noopener" class="card-btn card-btn-ghost" style="font-size:11px;">🗺 Mapa</a><a href="https://www.sems.udg.mx" target="_blank" rel="noopener" class="card-btn card-btn-primary" style="font-size:11px;">Sitio</a></div></article>
+
+        <article class="prep-card fade-up" data-name="preparatoria tamazula sur jalisco"><div class="prep-banner mesh-prep2"><span style="font-size:1.8rem">🏞️</span></div><div class="prep-body"><div class="prep-num">REG · TAMAZULA</div><div class="prep-name">Preparatoria Regional de Tamazula</div><div class="prep-loc">📍 Tamazula de Gordiano</div></div><div class="prep-actions"><a href="https://maps.google.com/?q=Preparatoria+Regional+Tamazula+UDG" target="_blank" rel="noopener" class="card-btn card-btn-ghost" style="font-size:11px;">🗺 Mapa</a><a href="https://www.sems.udg.mx" target="_blank" rel="noopener" class="card-btn card-btn-primary" style="font-size:11px;">Sitio</a></div></article>
+
+        <article class="prep-card fade-up" data-name="preparatoria tepatitlán altos jalisco"><div class="prep-banner mesh-prep"><span style="font-size:1.8rem">🐓</span></div><div class="prep-body"><div class="prep-num">REG · TEPATITLÁN</div><div class="prep-name">Preparatoria Regional de Tepatitlán</div><div class="prep-loc">📍 Tepatitlán de Morelos</div></div><div class="prep-actions"><a href="https://maps.google.com/?q=Preparatoria+Regional+Tepatitlan+UDG" target="_blank" rel="noopener" class="card-btn card-btn-ghost" style="font-size:11px;">🗺 Mapa</a><a href="https://www.sems.udg.mx" target="_blank" rel="noopener" class="card-btn card-btn-primary" style="font-size:11px;">Sitio</a></div></article>
+
+        <article class="prep-card fade-up" data-name="preparatoria tequila jalisco agave"><div class="prep-banner mesh-prep2"><span style="font-size:1.8rem">🥃</span></div><div class="prep-body"><div class="prep-num">REG · TEQUILA</div><div class="prep-name">Preparatoria Regional de Tequila</div><div class="prep-loc">📍 Tequila</div></div><div class="prep-actions"><a href="https://maps.google.com/?q=Preparatoria+Regional+Tequila+UDG" target="_blank" rel="noopener" class="card-btn card-btn-ghost" style="font-size:11px;">🗺 Mapa</a><a href="https://www.sems.udg.mx" target="_blank" rel="noopener" class="card-btn card-btn-primary" style="font-size:11px;">Sitio</a></div></article>
+
+        <article class="prep-card fade-up" data-name="preparatoria tuxpan sur jalisco"><div class="prep-banner mesh-prep"><span style="font-size:1.8rem">🌄</span></div><div class="prep-body"><div class="prep-num">REG · TUXPAN</div><div class="prep-name">Preparatoria Regional de Tuxpan</div><div class="prep-loc">📍 Tuxpan</div></div><div class="prep-actions"><a href="https://maps.google.com/?q=Preparatoria+Regional+Tuxpan+Jalisco+UDG" target="_blank" rel="noopener" class="card-btn card-btn-ghost" style="font-size:11px;">🗺 Mapa</a><a href="https://www.sems.udg.mx" target="_blank" rel="noopener" class="card-btn card-btn-primary" style="font-size:11px;">Sitio</a></div></article>
+
+        <article class="prep-card fade-up" data-name="preparatoria zapotiltic sur jalisco"><div class="prep-banner mesh-prep2"><span style="font-size:1.8rem">🌾</span></div><div class="prep-body"><div class="prep-num">REG · ZAPOTILTIC</div><div class="prep-name">Preparatoria Regional de Zapotiltic</div><div class="prep-loc">📍 Zapotiltic</div></div><div class="prep-actions"><a href="https://maps.google.com/?q=Preparatoria+Regional+Zapotiltic+UDG" target="_blank" rel="noopener" class="card-btn card-btn-ghost" style="font-size:11px;">🗺 Mapa</a><a href="https://www.sems.udg.mx" target="_blank" rel="noopener" class="card-btn card-btn-primary" style="font-size:11px;">Sitio</a></div></article>
+
+        <article class="prep-card fade-up" data-name="preparatoria zacoalco de torres jalisco"><div class="prep-banner mesh-prep"><span style="font-size:1.8rem">🌿</span></div><div class="prep-body"><div class="prep-num">REG · ZACOALCO</div><div class="prep-name">Preparatoria Regional de Zacoalco de Torres</div><div class="prep-loc">📍 Zacoalco de Torres</div></div><div class="prep-actions"><a href="https://maps.google.com/?q=Preparatoria+Regional+Zacoalco+UDG" target="_blank" rel="noopener" class="card-btn card-btn-ghost" style="font-size:11px;">🗺 Mapa</a><a href="https://www.sems.udg.mx" target="_blank" rel="noopener" class="card-btn card-btn-primary" style="font-size:11px;">Sitio</a></div></article>
+      </div>
+        <div class="load-more-wrap" id="lm-wrap-regional">
+          <div class="load-more-bar"><div class="load-more-bar-fill" id="lm-bar-regional"></div></div>
+          <button class="load-more-btn" id="lm-btn-regional" onclick="loadMore('regional')">
+            <span>Ver más preparatorias</span><span class="lm-icon">↓</span>
+          </button>
+          <span class="load-more-count" id="lm-count-regional"></span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ╔══════ ADMINISTRACIONES ══════╗ -->
+<section id="administraciones" class="section section-data" data-section="admin" aria-labelledby="admin-title">
+  <div class="container">
+    <div class="section-header">
+      <p class="section-eyebrow">🏢 Gobierno y Administración Universitaria</p>
+      <h2 class="section-title" id="admin-title">Dependencias Administrativas</h2>
+      <p class="section-sub">Las dependencias que coordinan y sostienen el funcionamiento académico, financiero, cultural y de servicios de toda la Red Universitaria.</p>
+      <div class="divider"></div>
+    </div>
+    <div class="cards-grid cards-grid-4" id="admin-grid">
+
+      <article class="admin-card fade-up" data-name="rectoría general rector udg">
+        <div class="admin-icon">🏛️</div>
+        <div class="admin-name">Rectoría General</div>
+        <div class="admin-desc">Máxima autoridad ejecutiva de la Universidad de Guadalajara. Coordina el funcionamiento de toda la Red Universitaria y representa a la institución.</div>
+        <a href="https://www.udg.mx" target="_blank" rel="noopener" class="card-btn card-btn-primary" style="width:fit-content; font-size:12px;">Sitio Oficial</a>
+      </article>
+
+      <article class="admin-card fade-up" data-name="vicerrectoría ejecutiva">
+        <div class="admin-icon">⚖️</div>
+        <div class="admin-name">Vicerrectoría Ejecutiva</div>
+        <div class="admin-desc">Apoya a la Rectoría General en la toma de decisiones estratégicas, coordinación de programas institucionales y gestión de proyectos prioritarios.</div>
+        <a href="https://www.udg.mx" target="_blank" rel="noopener" class="card-btn card-btn-primary" style="width:fit-content; font-size:12px;">Sitio Oficial</a>
+      </article>
+
+      <article class="admin-card fade-up" data-name="secretaría general">
+        <div class="admin-icon">📋</div>
+        <div class="admin-name">Secretaría General</div>
+        <div class="admin-desc">Responsable de los procesos normativos, actas y legislación universitaria. Coordina la comunicación institucional y el archivo general.</div>
+        <a href="https://www.udg.mx" target="_blank" rel="noopener" class="card-btn card-btn-primary" style="width:fit-content; font-size:12px;">Sitio Oficial</a>
+      </article>
+
+      <article class="admin-card fade-up" data-name="coordinación académica innovación">
+        <div class="admin-icon">🎓</div>
+        <div class="admin-name">Coordinación General Académica y de Innovación</div>
+        <div class="admin-desc">Impulsa la calidad académica, los procesos de innovación educativa, el currículo y la evaluación de programas en toda la Red.</div>
+        <a href="https://www.udg.mx" target="_blank" rel="noopener" class="card-btn card-btn-primary" style="width:fit-content; font-size:12px;">Sitio Oficial</a>
+      </article>
+
+      <article class="admin-card fade-up" data-name="planeación evaluación">
+        <div class="admin-icon">📊</div>
+        <div class="admin-name">Coordinación General de Planeación y Evaluación</div>
+        <div class="admin-desc">Diseña, implementa y supervisa el Plan de Desarrollo Institucional, estadísticas universitarias y evaluación del desempeño institucional.</div>
+        <a href="https://www.udg.mx" target="_blank" rel="noopener" class="card-btn card-btn-primary" style="width:fit-content; font-size:12px;">Sitio Oficial</a>
+      </article>
+
+      <article class="admin-card fade-up" data-name="investigación posgrado vinculación">
+        <div class="admin-icon">🔬</div>
+        <div class="admin-name">Coordinación General de Investigación, Posgrado y Vinculación</div>
+        <div class="admin-desc">Fomenta la investigación científica, los posgrados de alto nivel y la vinculación con el sector productivo y social.</div>
+        <a href="https://www.udg.mx" target="_blank" rel="noopener" class="card-btn card-btn-primary" style="width:fit-content; font-size:12px;">Sitio Oficial</a>
+      </article>
+
+      <article class="admin-card fade-up" data-name="extensión cultura difusión">
+        <div class="admin-icon">🎭</div>
+        <div class="admin-name">Coordinación General de Extensión y Difusión Cultural</div>
+        <div class="admin-desc">Promueve la cultura, las artes, el deporte y la extensión universitaria hacia la sociedad jalisciense y mexicana.</div>
+        <a href="https://www.udg.mx" target="_blank" rel="noopener" class="card-btn card-btn-primary" style="width:fit-content; font-size:12px;">Sitio Oficial</a>
+      </article>
+
+      <article class="admin-card fade-up" data-name="servicios universitarios estudiantes">
+        <div class="admin-icon">🎒</div>
+        <div class="admin-name">Coordinación General de Servicios a Universitarios</div>
+        <div class="admin-desc">Gestiona becas, servicios escolares, orientación, actividades deportivas y todos los servicios de apoyo a la comunidad estudiantil.</div>
+        <a href="https://www.udg.mx" target="_blank" rel="noopener" class="card-btn card-btn-primary" style="width:fit-content; font-size:12px;">Sitio Oficial</a>
+      </article>
+
+      <article class="admin-card fade-up" data-name="tecnologías información sistemas ti">
+        <div class="admin-icon">💻</div>
+        <div class="admin-name">Coordinación General de Tecnologías de Información</div>
+        <div class="admin-desc">Administra la infraestructura tecnológica, sistemas de información, plataformas digitales y la conectividad de toda la Red UDG.</div>
+        <a href="https://www.udg.mx" target="_blank" rel="noopener" class="card-btn card-btn-primary" style="width:fit-content; font-size:12px;">Sitio Oficial</a>
+      </article>
+
+      <article class="admin-card fade-up" data-name="finanzas presupuesto recursos">
+        <div class="admin-icon">💰</div>
+        <div class="admin-name">Dirección de Finanzas</div>
+        <div class="admin-desc">Administra el presupuesto, recursos financieros, contabilidad y transparencia en el ejercicio del gasto universitario.</div>
+        <a href="https://www.udg.mx" target="_blank" rel="noopener" class="card-btn card-btn-primary" style="width:fit-content; font-size:12px;">Sitio Oficial</a>
+      </article>
+
+      <article class="admin-card fade-up" data-name="abogacía general jurídico legal">
+        <div class="admin-icon">⚖️</div>
+        <div class="admin-name">Abogacía General</div>
+        <div class="admin-desc">Órgano jurídico institucional que brinda asesoría legal, defiende los intereses de la universidad y asegura la legalidad de sus actos.</div>
+        <a href="https://www.udg.mx" target="_blank" rel="noopener" class="card-btn card-btn-primary" style="width:fit-content; font-size:12px;">Sitio Oficial</a>
+      </article>
+
+      <article class="admin-card fade-up" data-name="contraloría auditoría fiscalización">
+        <div class="admin-icon">🔍</div>
+        <div class="admin-name">Contraloría General</div>
+        <div class="admin-desc">Supervisa el control interno, auditoría del gasto, combate a la corrupción y rendición de cuentas de las dependencias universitarias.</div>
+        <a href="https://www.udg.mx" target="_blank" rel="noopener" class="card-btn card-btn-primary" style="width:fit-content; font-size:12px;">Sitio Oficial</a>
+      </article>
+
+      <article class="admin-card fade-up" data-name="sistema bibliotecas sibi udg">
+        <div class="admin-icon">📚</div>
+        <div class="admin-name">Sistema Universitario de Bibliotecas (SIBI)</div>
+        <div class="admin-desc">Red de más de 40 bibliotecas en todo el estado, con acceso a millones de recursos físicos y digitales para la comunidad universitaria.</div>
+        <a href="https://www.sibi.udg.mx" target="_blank" rel="noopener" class="card-btn card-btn-primary" style="width:fit-content; font-size:12px;">Sitio Oficial</a>
+      </article>
+
+      <article class="admin-card fade-up" data-name="biblioteca pública estado jalisco guadalajara">
+        <div class="admin-icon">🏛️</div>
+        <div class="admin-name">Biblioteca Pública del Estado de Jalisco</div>
+        <div class="admin-desc">Una de las más importantes del país, abierta al público en general en el Centro Histórico de Guadalajara, con patrimonio documental invaluable.</div>
+        <a href="https://maps.google.com/?q=Biblioteca+Publica+Jalisco+Guadalajara" target="_blank" rel="noopener" class="card-btn card-btn-ghost" style="width:fit-content; font-size:12px;">🗺 Mapa</a>
+      </article>
+
+      <article class="admin-card fade-up" data-name="biblioteca iberoamericana octavio paz">
+        <div class="admin-icon">📖</div>
+        <div class="admin-name">Biblioteca Iberoamericana Octavio Paz</div>
+        <div class="admin-desc">Espacio cultural y biblioteca de referencia iberoamericana en Guadalajara. Acervo especializado en literatura, humanidades y cultura latinoamericana.</div>
+        <a href="https://maps.google.com/?q=Biblioteca+Iberoamericana+Octavio+Paz+Guadalajara" target="_blank" rel="noopener" class="card-btn card-btn-ghost" style="width:fit-content; font-size:12px;">🗺 Mapa</a>
+      </article>
+
+      <article class="admin-card fade-up" data-name="sems sistema educación media superior preparatorias">
+        <div class="admin-icon">🏫</div>
+        <div class="admin-name">Sistema de Educación Media Superior (SEMS)</div>
+        <div class="admin-desc">Coordina todas las preparatorias de la UDG. Administra currículos, evaluación, infraestructura y programas de apoyo a nivel bachillerato en Jalisco.</div>
+        <a href="https://www.sems.udg.mx" target="_blank" rel="noopener" class="card-btn card-btn-primary" style="width:fit-content; font-size:12px;">Sitio Oficial</a>
+      </article>
+
+      <article class="admin-card fade-up" data-name="suv sistema universidad virtual online digital">
+        <div class="admin-icon">🌐</div>
+        <div class="admin-name">Sistema de Universidad Virtual (SUV)</div>
+        <div class="admin-desc">Dependencia que gestiona toda la oferta educativa en línea de la UDG, pionera en educación a distancia en México desde 2005.</div>
+        <a href="https://www.suv.udg.mx" target="_blank" rel="noopener" class="card-btn card-btn-primary" style="width:fit-content; font-size:12px;">Sitio Oficial</a>
+      </article>
+
+      <article class="admin-card fade-up" data-name="radio televisión cinematografía rtc udg">
+        <div class="admin-icon">📡</div>
+        <div class="admin-name">Sistema Universitario de Radio, Televisión y Cinematografía</div>
+        <div class="admin-desc">Opera los medios de comunicación universitaria: UDG TV, Radio UDG y el programa de cinematografía educativa e institucional.</div>
+        <a href="https://www.udgtv.mx" target="_blank" rel="noopener" class="card-btn card-btn-primary" style="width:fit-content; font-size:12px;">Sitio Oficial</a>
+      </article>
+
+      <article class="admin-card fade-up" data-name="fundación universidad guadalajara">
+        <div class="admin-icon">🤝</div>
+        <div class="admin-name">Fundación Universidad de Guadalajara</div>
+        <div class="admin-desc">Obtiene y administra recursos para becas, proyectos de investigación, infraestructura y vinculación entre la UDG y el sector privado y social.</div>
+        <a href="https://www.udg.mx" target="_blank" rel="noopener" class="card-btn card-btn-primary" style="width:fit-content; font-size:12px;">Sitio Oficial</a>
+      </article>
+
+      <article class="admin-card fade-up" data-name="consejo general universitario cgu">
+        <div class="admin-icon">🏛️</div>
+        <div class="admin-name">Consejo General Universitario (CGU)</div>
+        <div class="admin-desc">Máximo órgano de gobierno colegiado de la UDG. Establece normas, aprueba presupuestos y define las políticas institucionales de la universidad.</div>
+        <a href="https://www.udg.mx" target="_blank" rel="noopener" class="card-btn card-btn-primary" style="width:fit-content; font-size:12px;">Sitio Oficial</a>
+      </article>
+
+    </div>
+      <div class="load-more-wrap" id="lm-wrap-admin">
+        <div class="load-more-bar"><div class="load-more-bar-fill" id="lm-bar-admin"></div></div>
+        <button class="load-more-btn" id="lm-btn-admin" onclick="loadMore('admin')">
+          <span>Ver más dependencias</span><span class="lm-icon">↓</span>
+        </button>
+        <span class="load-more-count" id="lm-count-admin"></span>
+      </div>
+  </div>
+</section>
+
+<!-- ╔══════ MODALIDAD VIRTUAL ══════╗ -->
+<section id="virtual" class="section section-alt section-data" data-section="virtual" aria-labelledby="virtual-title">
+  <div class="container">
+    <div class="section-header">
+      <p class="section-eyebrow">💻 Sistema de Universidad Virtual</p>
+      <h2 class="section-title" id="virtual-title">Educación Virtual UDG</h2>
+      <div class="divider"></div>
+    </div>
+
+    <div class="virt-hero">
+      <div class="virt-hero-content">
+        <h2>Estudia desde cualquier lugar de México</h2>
+        <p>El Sistema de Universidad Virtual de la UDG es pionero en educación a distancia en América Latina. Programas 100% en línea con la calidad y el respaldo de una de las mejores universidades de México.</p>
+        <div class="virt-tags">
+          <span class="virt-tag">🎓 Bachillerato</span>
+          <span class="virt-tag">📜 Licenciatura</span>
+          <span class="virt-tag">🔬 Maestría</span>
+          <span class="virt-tag">📚 Educación Continua</span>
+          <span class="virt-tag">🌐 100% en Línea</span>
+          <span class="virt-tag">✅ Acreditado</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="virt-grid" id="virtual-grid">
+
+      <article class="virt-card fade-up" data-name="bachillerato general áreas interdisciplinarias virtual">
+        <div class="virt-card-icon">🏫</div>
+        <div class="virt-card-level">Bachillerato · Virtual</div>
+        <div class="virt-card-name">Bachillerato General por Áreas Interdisciplinarias</div>
+        <p class="virt-card-desc">Preparatoria en modalidad virtual con enfoque interdisciplinario. Certificación oficial UDG, ideal para adultos que trabajan o viven fuera de centros urbanos.</p>
+        <div style="margin-top:12px;">
+          <a href="https://www.suv.udg.mx" target="_blank" rel="noopener" class="card-btn card-btn-primary" style="font-size:12px; display:inline-block;">Más información</a>
+        </div>
+      </article>
+
+      <article class="virt-card fade-up" data-name="licenciatura administración organizaciones virtual">
+        <div class="virt-card-icon">📊</div>
+        <div class="virt-card-level">Licenciatura · Virtual</div>
+        <div class="virt-card-name">Licenciatura en Administración de las Organizaciones</div>
+        <p class="virt-card-desc">Forma líderes organizacionales con habilidades de gestión, planeación estratégica y dirección empresarial para el entorno digital y globalizado.</p>
+        <div style="margin-top:12px;">
+          <a href="https://www.suv.udg.mx" target="_blank" rel="noopener" class="card-btn card-btn-primary" style="font-size:12px; display:inline-block;">Más información</a>
+        </div>
+      </article>
+
+      <article class="virt-card fade-up" data-name="licenciatura bibliotecología gestión conocimiento virtual">
+        <div class="virt-card-icon">📚</div>
+        <div class="virt-card-level">Licenciatura · Virtual</div>
+        <div class="virt-card-name">Licenciatura en Bibliotecología y Gestión del Conocimiento</div>
+        <p class="virt-card-desc">Profesionales de la información capaces de gestionar bibliotecas, archivos y sistemas de información en la era digital.</p>
+        <div style="margin-top:12px;">
+          <a href="https://www.suv.udg.mx" target="_blank" rel="noopener" class="card-btn card-btn-primary" style="font-size:12px; display:inline-block;">Más información</a>
+        </div>
+      </article>
+
+      <article class="virt-card fade-up" data-name="licenciatura desarrollo educativo virtual">
+        <div class="virt-card-icon">🌱</div>
+        <div class="virt-card-level">Licenciatura · Virtual</div>
+        <div class="virt-card-name">Licenciatura en Desarrollo Educativo</div>
+        <p class="virt-card-desc">Forma especialistas en innovación educativa, diseño curricular, uso de tecnología en el aula y gestión de instituciones educativas.</p>
+        <div style="margin-top:12px;">
+          <a href="https://www.suv.udg.mx" target="_blank" rel="noopener" class="card-btn card-btn-primary" style="font-size:12px; display:inline-block;">Más información</a>
+        </div>
+      </article>
+
+      <article class="virt-card fade-up" data-name="licenciatura gestión cultural virtual">
+        <div class="virt-card-icon">🎭</div>
+        <div class="virt-card-level">Licenciatura · Virtual</div>
+        <div class="virt-card-name">Licenciatura en Gestión Cultural</div>
+        <p class="virt-card-desc">Diseña y gestiona proyectos culturales, promueve el patrimonio y vincula la cultura con el desarrollo social y económico de comunidades.</p>
+        <div style="margin-top:12px;">
+          <a href="https://www.suv.udg.mx" target="_blank" rel="noopener" class="card-btn card-btn-primary" style="font-size:12px; display:inline-block;">Más información</a>
+        </div>
+      </article>
+
+      <article class="virt-card fade-up" data-name="licenciatura mercadotecnia digital virtual">
+        <div class="virt-card-icon">📱</div>
+        <div class="virt-card-level">Licenciatura · Virtual</div>
+        <div class="virt-card-name">Licenciatura en Mercadotecnia Digital</div>
+        <p class="virt-card-desc">Expertos en estrategias de marketing digital, SEO, SEM, redes sociales, e-commerce y analítica de datos para negocios del siglo XXI.</p>
+        <div style="margin-top:12px;">
+          <a href="https://www.suv.udg.mx" target="_blank" rel="noopener" class="card-btn card-btn-primary" style="font-size:12px; display:inline-block;">Más información</a>
+        </div>
+      </article>
+
+      <article class="virt-card fade-up" data-name="licenciatura periodismo digital virtual comunicación">
+        <div class="virt-card-icon">📰</div>
+        <div class="virt-card-level">Licenciatura · Virtual</div>
+        <div class="virt-card-name">Licenciatura en Periodismo Digital</div>
+        <p class="virt-card-desc">Periodistas para la era digital. Producción multimedia, narrativa transmedia, verificación de hechos y ética periodística en entornos digitales.</p>
+        <div style="margin-top:12px;">
+          <a href="https://www.suv.udg.mx" target="_blank" rel="noopener" class="card-btn card-btn-primary" style="font-size:12px; display:inline-block;">Más información</a>
+        </div>
+      </article>
+
+      <article class="virt-card fade-up" data-name="licenciatura seguridad ciudadana virtual">
+        <div class="virt-card-icon">🛡️</div>
+        <div class="virt-card-level">Licenciatura · Virtual</div>
+        <div class="virt-card-name">Licenciatura en Seguridad Ciudadana</div>
+        <p class="virt-card-desc">Forma profesionales en análisis de riesgo, prevención del delito, políticas públicas de seguridad y derechos humanos para comunidades más seguras.</p>
+        <div style="margin-top:12px;">
+          <a href="https://www.suv.udg.mx" target="_blank" rel="noopener" class="card-btn card-btn-primary" style="font-size:12px; display:inline-block;">Más información</a>
+        </div>
+      </article>
+
+      <article class="virt-card fade-up" data-name="licenciatura tecnologías información virtual sistemas">
+        <div class="virt-card-icon">⚙️</div>
+        <div class="virt-card-level">Licenciatura · Virtual</div>
+        <div class="virt-card-name">Licenciatura en Tecnologías e Información</div>
+        <p class="virt-card-desc">Gestión y análisis de sistemas de información, infraestructura digital, seguridad informática y transformación digital empresarial.</p>
+        <div style="margin-top:12px;">
+          <a href="https://www.suv.udg.mx" target="_blank" rel="noopener" class="card-btn card-btn-primary" style="font-size:12px; display:inline-block;">Más información</a>
+        </div>
+      </article>
+
+      <article class="virt-card fade-up" data-name="maestrías diplomados posgrado virtual">
+        <div class="virt-card-icon">🔬</div>
+        <div class="virt-card-level">Posgrado y Educación Continua · Virtual</div>
+        <div class="virt-card-name">Maestrías y Diplomados en Línea</div>
+        <p class="virt-card-desc">Amplia oferta de maestrías, especializaciones y diplomados en línea en áreas de educación, tecnología, administración, cultura y más.</p>
+        <div style="margin-top:12px;">
+          <a href="https://www.suv.udg.mx" target="_blank" rel="noopener" class="card-btn card-btn-primary" style="font-size:12px; display:inline-block;">Ver oferta completa</a>
+        </div>
+      </article>
+
+    </div>
+      <div class="load-more-wrap" id="lm-wrap-virtual">
+        <div class="load-more-bar"><div class="load-more-bar-fill" id="lm-bar-virtual"></div></div>
+        <button class="load-more-btn" id="lm-btn-virtual" onclick="loadMore('virtual')">
+          <span>Ver más programas</span><span class="lm-icon">↓</span>
+        </button>
+        <span class="load-more-count" id="lm-count-virtual"></span>
+      </div>
+  </div>
+</section>
+
+<!-- ╔══════ FOOTER ══════╗ -->
+<footer role="contentinfo">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <strong>Universidad de Guadalajara</strong>
+        <span>RED UNIVERSITARIA · GUÍA COMPLETA</span>
+        <p>La Universidad de Guadalajara es la segunda universidad pública más grande de México, con presencia en todo el estado de Jalisco a través de 20 centros universitarios, 49+ preparatorias y educación virtual.</p>
+        <div class="footer-social">
+          <a href="https://facebook.com/udg.mx" target="_blank" rel="noopener" class="social-btn" aria-label="Facebook UDG">f</a>
+          <a href="https://twitter.com/UdeGoficial" target="_blank" rel="noopener" class="social-btn" aria-label="Twitter UDG">𝕏</a>
+          <a href="https://instagram.com/udg.mx" target="_blank" rel="noopener" class="social-btn" aria-label="Instagram UDG">📸</a>
+          <a href="https://youtube.com/udgtv" target="_blank" rel="noopener" class="social-btn" aria-label="YouTube UDG">▶</a>
+        </div>
+      </div>
+
+      <div class="footer-col">
+        <h4>Centros</h4>
+        <ul>
+          <li><a href="https://www.cucea.udg.mx" target="_blank" rel="noopener">CUCEA</a></li>
+          <li><a href="https://www.cucei.udg.mx" target="_blank" rel="noopener">CUCEI</a></li>
+          <li><a href="https://www.cucs.udg.mx" target="_blank" rel="noopener">CUCS</a></li>
+          <li><a href="https://www.cuaad.udg.mx" target="_blank" rel="noopener">CUAAD</a></li>
+          <li><a href="https://www.cucsh.udg.mx" target="_blank" rel="noopener">CUCSH</a></li>
+          <li><a href="https://www.cucba.udg.mx" target="_blank" rel="noopener">CUCBA</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Sistemas</h4>
+        <ul>
+          <li><a href="https://www.sems.udg.mx" target="_blank" rel="noopener">SEMS</a></li>
+          <li><a href="https://www.suv.udg.mx" target="_blank" rel="noopener">SUV</a></li>
+          <li><a href="https://www.sibi.udg.mx" target="_blank" rel="noopener">SIBI</a></li>
+          <li><a href="https://www.udgtv.mx" target="_blank" rel="noopener">UDG TV</a></li>
+          <li><a href="https://www.udg.mx" target="_blank" rel="noopener">Portal UDG</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Acceso Directo</h4>
+        <ul>
+          <li><a href="#centros">Centros Universitarios</a></li>
+          <li><a href="#preparatorias">Preparatorias</a></li>
+          <li><a href="#administraciones">Administraciones</a></li>
+          <li><a href="#virtual">Modalidad Virtual</a></li>
+          <li><a href="#buscar">Buscador</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p>© 2024 Guía Red Universitaria UDG. Sitio informativo no oficial.</p>
+      <div class="footer-badge">
+        Información oficial:
+        <a href="https://www.udg.mx" target="_blank" rel="noopener" style="color:var(--rojo-l); text-decoration:none; margin-left:4px;">udg.mx</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+// ══════════════════════════════════════════════════
+//  PROGRESSIVE LOADING SYSTEM
+// ══════════════════════════════════════════════════
+const BATCH = { centros: 6, metro: 8, regional: 8, admin: 8, virtual: 6 };
+
+const CONFIGS = {
+  centros:  { gridId: 'centros-grid',   selector: 'article.card',      wrapId: 'lm-wrap-centros',  btnId: 'lm-btn-centros',  barId: 'lm-bar-centros',  countId: 'lm-count-centros'  },
+  metro:    { gridId: 'metro',          selector: 'article.prep-card', wrapId: 'lm-wrap-metro',    btnId: 'lm-btn-metro',    barId: 'lm-bar-metro',    countId: 'lm-count-metro'    },
+  regional: { gridId: 'regional',       selector: 'article.prep-card', wrapId: 'lm-wrap-regional', btnId: 'lm-btn-regional', barId: 'lm-bar-regional', countId: 'lm-count-regional' },
+  admin:    { gridId: 'admin-grid',     selector: 'article.admin-card',wrapId: 'lm-wrap-admin',    btnId: 'lm-btn-admin',    barId: 'lm-bar-admin',    countId: 'lm-count-admin'    },
+  virtual:  { gridId: 'virtual-grid',   selector: 'article.virt-card', wrapId: 'lm-wrap-virtual',  btnId: 'lm-btn-virtual',  barId: 'lm-bar-virtual',  countId: 'lm-count-virtual'  },
+};
+
+// State: how many are currently visible per section
+const state = {};
+
+function initSection(key) {
+  const cfg   = CONFIGS[key];
+  const grid  = document.getElementById(cfg.gridId);
+  if (!grid) return;
+  const cards = Array.from(grid.querySelectorAll(cfg.selector));
+  const batch = BATCH[key];
+
+  cards.forEach((c, i) => {
+    if (i < batch) {
+      c.classList.remove('card-lazy');
+      c.classList.add('revealed');
+    } else {
+      c.classList.remove('revealed');
+      c.classList.add('card-lazy');
+    }
+  });
+
+  state[key] = { shown: Math.min(batch, cards.length), total: cards.length };
+  updateUI(key);
+}
+
+function loadMore(key) {
+  const cfg   = CONFIGS[key];
+  const grid  = document.getElementById(cfg.gridId);
+  if (!grid) return;
+  const cards = Array.from(grid.querySelectorAll(cfg.selector));
+  const batch = BATCH[key];
+  const s     = state[key];
+
+  const btn = document.getElementById(cfg.btnId);
+  if (btn) { btn.disabled = true; btn.style.opacity = '.6'; }
+
+  let revealed = 0;
+  const toReveal = [];
+
+  for (let i = s.shown; i < cards.length && revealed < batch; i++) {
+    toReveal.push(cards[i]);
+    revealed++;
+  }
+
+  // Staggered animation
+  toReveal.forEach((card, i) => {
+    setTimeout(() => {
+      card.classList.remove('card-lazy');
+      card.classList.add('revealed');
+    }, i * 70);
+  });
+
+  s.shown += revealed;
+
+  setTimeout(() => {
+    if (btn) { btn.disabled = false; btn.style.opacity = '1'; }
+    updateUI(key);
+  }, toReveal.length * 70 + 100);
+}
+
+function updateUI(key) {
+  const cfg  = CONFIGS[key];
+  const s    = state[key];
+  const wrap = document.getElementById(cfg.wrapId);
+  const btn  = document.getElementById(cfg.btnId);
+  const bar  = document.getElementById(cfg.barId);
+  const cnt  = document.getElementById(cfg.countId);
+
+  if (!wrap) return;
+
+  const pct = Math.round((s.shown / s.total) * 100);
+  if (bar) bar.style.width = pct + '%';
+
+  if (s.shown >= s.total) {
+    if (btn) btn.style.display = 'none';
+    if (cnt) cnt.innerHTML = '';
+    // Show end message
+    const existing = wrap.querySelector('.load-more-end');
+    if (!existing) {
+      const end = document.createElement('div');
+      end.className = 'load-more-end';
+      end.textContent = `✓ Se muestran los ${s.total} registros de esta sección`;
+      wrap.appendChild(end);
+    }
+  } else {
+    if (btn) btn.style.display = 'inline-flex';
+    const remaining = s.total - s.shown;
+    if (cnt) cnt.textContent = `Mostrando ${s.shown} de ${s.total} · ${remaining} más disponibles`;
+  }
+}
+
+// ── SEARCH (works with lazy cards too) ────────────
+function doSearch(q) {
+  q = q.toLowerCase().trim();
+
+  // When searching: reveal ALL cards first so search can find them
+  if (q) {
+    Object.keys(CONFIGS).forEach(key => {
+      const cfg  = CONFIGS[key];
+      const grid = document.getElementById(cfg.gridId);
+      if (!grid) return;
+      grid.querySelectorAll(cfg.selector).forEach(c => {
+        c.classList.remove('card-lazy');
+        c.classList.add('revealed');
+      });
+      if (state[key]) {
+        state[key].shown = state[key].total;
+        updateUI(key);
+      }
+    });
+    sections.forEach(s => s.style.display = '');
+    filterBtns.forEach(b => { b.classList.remove('active'); b.setAttribute('aria-selected','false'); });
+    filterBtns[0].classList.add('active');
+  } else {
+    // Reset progressive loading when search is cleared
+    Object.keys(CONFIGS).forEach(key => initSection(key));
+  }
+
+  const allCards = document.querySelectorAll('[data-name]');
+  allCards.forEach(c => {
+    const hay = (c.dataset.name || '') + ' ' + c.textContent;
+    const match = !q || hay.toLowerCase().includes(q);
+    c.style.display = match ? '' : 'none';
+  });
+}
+
+function triggerSearch() {
+  const q = document.getElementById('hero-search').value;
+  doSearch(q);
+  if (q) document.getElementById('centros').scrollIntoView({ behavior: 'smooth' });
+}
+
+// ── FILTER TABS ────────────────────────────────────
+const filterBtns = document.querySelectorAll('.filter-btn');
+const sections   = document.querySelectorAll('.section-data');
+
+filterBtns.forEach(btn => {
+  btn.addEventListener('click', () => {
+    filterBtns.forEach(b => { b.classList.remove('active'); b.setAttribute('aria-selected','false'); });
+    btn.classList.add('active');
+    btn.setAttribute('aria-selected','true');
+
+    const f = btn.dataset.filter;
+    sections.forEach(sec => {
+      if (f === 'all' || sec.dataset.section === f) {
+        sec.style.display = '';
+      } else {
+        sec.style.display = 'none';
+      }
+    });
+    if (f !== 'all') {
+      const target = document.querySelector(`[data-section="${f}"]`);
+      if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  });
+});
+
+// ── SUBTABS ────────────────────────────────────────
+function switchSubTab(btn, id) {
+  const parent = btn.closest('section');
+  parent.querySelectorAll('.sub-tab').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  parent.querySelectorAll('.prep-subsection').forEach(s => s.classList.remove('active-sub'));
+  document.getElementById(id).classList.add('active-sub');
+  // Re-init the newly visible section
+  initSection(id);
+}
+
+// ── SEARCH INPUT BINDING ──────────────────────────
+let searchTimer;
+['main-search','hero-search'].forEach(id => {
+  const el = document.getElementById(id);
+  if (!el) return;
+  el.addEventListener('input', e => {
+    clearTimeout(searchTimer);
+    searchTimer = setTimeout(() => {
+      document.getElementById('main-search').value = e.target.value;
+      document.getElementById('hero-search').value  = e.target.value;
+      doSearch(e.target.value);
+    }, 240);
+  });
+  el.addEventListener('keydown', e => { if (e.key === 'Enter') triggerSearch(); });
+});
+
+document.querySelector('.btn-ghost')?.addEventListener('click', e => {
+  e.preventDefault();
+  document.getElementById('hero-search').focus();
+  document.getElementById('buscar').scrollIntoView({ behavior: 'smooth' });
+});
+
+// ── SCROLL REVEAL ──────────────────────────────────
+const revealObs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); revealObs.unobserve(e.target); } });
+}, { threshold: 0.07, rootMargin: '0px 0px -30px 0px' });
+
+function observeCard(el) { revealObs.observe(el); }
+
+// ── NAV SHADOW ─────────────────────────────────────
+window.addEventListener('scroll', () => {
+  document.getElementById('nav').style.boxShadow =
+    window.scrollY > 20 ? '0 2px 20px rgba(26,18,16,.1)' : '';
+}, { passive: true });
+
+// ── INIT ALL SECTIONS ──────────────────────────────
+document.addEventListener('DOMContentLoaded', () => {
+  // Init all sections — lazy hides cards beyond initial batch immediately
+  Object.keys(CONFIGS).forEach(key => {
+    if (key === 'regional') return; // regional inits on tab switch
+    initSection(key);
+  });
+
+  // Observe initially visible cards for scroll reveal
+  document.querySelectorAll('.card.revealed, .prep-card.revealed, .admin-card.revealed, .virt-card.revealed').forEach((el, i) => {
+    el.classList.add('fade-up');
+    el.style.transitionDelay = `${(i % 4) * 60}ms`;
+    revealObs.observe(el);
+  });
+
+  // section-header and virt-hero use CSS animations — no JS needed
+});
+</script>
+</body>
+</html>
